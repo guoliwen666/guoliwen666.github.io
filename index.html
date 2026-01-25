@@ -41,7 +41,37 @@
             justify-content: space-between;
             flex-wrap: wrap;
         }
+/* --- 新增的头像样式 开始 --- */
+.header-content {
+    display: flex;
+    align-items: center; /* 让照片和文字垂直居中对齐 */
+}
 
+.avatar {
+    width: 120px;        /* 设置照片宽度 */
+    height: 120px;       /* 设置照片高度，保持正方形 */
+    border-radius: 50%;  /* 把照片裁切成圆形 */
+    margin-right: 25px;  /* 照片和右边文字的间距 */
+    object-fit: cover;   /* 防止照片变形 */
+    border: 3px solid #fff; /* 加一个白色的边框，更好看 */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* 加一点点阴影，更有立体感 */
+}
+
+/* 移动端适配：手机上照片和文字上下排列 */
+@media (max-width: 600px) {
+    .header-content {
+        flex-direction: column; /* 改为垂直排列 */
+        align-items: flex-start;
+        margin-bottom: 15px;
+    }
+    .avatar {
+        margin-right: 0;    /* 取消右边距 */
+        margin-bottom: 15px; /* 增加下边距 */
+        width: 100px;       /* 手机上稍微调小一点 */
+        height: 100px;
+    }
+}
+/* --- 新增的头像样式 结束 --- */
         h1 {
             font-size: 2.2rem;
             margin: 0;
@@ -157,19 +187,22 @@
 <body>
 
 <div class="container">
-    <header>
+ <header>
+    <div class="header-content">
+        <img src="avatar.jpg" alt="Guo Liwen" class="avatar">
         <div>
             <h1>郭利文 (Guo Liwen)</h1>
-            <div class="subtitle">Applied Mathematics &middot; Researcher</div>
+            <div class="subtitle">Applied Mathematics · Researcher</div>
         </div>
-        <nav>
-            <a href="#about">About</a>
-            <a href="#research">Research</a>
-            <a href="#publications">Publications</a>
-            <a href="#teaching">Teaching</a>
-            <a href="#contact">Contact</a>
-        </nav>
-    </header>
+    </div>
+    <nav>
+        <a href="#about">About</a>
+        <a href="#research">Research</a>
+        <a href="#publications">Publications</a>
+        <a href="#teaching">Teaching</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
 
     <section id="about">
         <h2>About Me</h2>
