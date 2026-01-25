@@ -183,23 +183,52 @@ h2 {
                 display: inline-block;
             }
         }
+        /* --- 新增：右上角校徽与导航布局 --- */
+.header-right {
+    display: flex;
+    flex-direction: column; /* 让校徽和导航栏垂直排列 */
+    align-items: flex-end;  /* 强制靠右对齐 */
+}
+
+.school-logo {
+    height: 55px;           /* 校徽大小，可根据实际图片调整 */
+    width: auto;            /* 保持图片比例 */
+    margin-bottom: 10px;    /* 让校徽和下面的文字拉开点距离 */
+    opacity: 0.95;          /* 稍微一点点透明度，融合感更好 */
+}
+
+/* 手机端适配：屏幕变窄时，右侧内容居左或居中 */
+@media (max-width: 600px) {
+    .header-right {
+        align-items: flex-start; /* 手机上改为左对齐 */
+        margin-top: 20px;        /* 和上面拉开距离 */
+    }
+    .school-logo {
+        height: 45px; /* 手机上校徽稍微小一点 */
+    }
+}
     </style>
 </head>
 <body>
 
 <div class="container">
- <header>
+<header>
     <div class="header-content">
         <img src="avatar.jpg" alt="Guo Liwen" class="avatar">
         <div>
             <h1>郭利文 (Guo Liwen)</h1>
-            <div class="subtitle">.</div>
+            <div class="subtitle">学无止境</div>
         </div>
     </div>
-    <nav>
-        <a href="#about">About</a>
-        <a href="#Notes">Notes</a>
-    </nav>
+
+    <div class="header-right">
+        <img src="sd.jpg" alt="University Logo" class="school-logo">
+        
+        <nav>
+            <a href="#about">About</a>
+            <a href="#Notes">Notes</a>
+        </nav>
+    </div>
 </header>
 
     <section id="about">
