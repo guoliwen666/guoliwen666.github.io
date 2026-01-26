@@ -123,15 +123,20 @@
         }
 
         /* 移动端适配：右侧部分 */
-        @media (max-width: 600px) {
-            .header-right {
-                align-items: flex-start;
-                margin-top: 20px;
-            }
-            .school-logo {
-                height: 65px;
-            }
-        }
+       /* 移动端适配 */
+@media (max-width: 600px) {
+    /* 其他代码不用动... */
+
+    .school-logo {
+        display: none;  /* <--- 核心修改：在手机上彻底隐藏校徽 */
+    }
+    
+    /* 可选：因为校徽没了，可以把导航栏往上提一点，减少留白 */
+    .header-right {
+        margin-top: 10px; 
+        align-items: flex-start;
+    }
+}
 
         /* 导航栏 */
         nav a {
