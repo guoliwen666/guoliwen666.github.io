@@ -16,6 +16,14 @@
             --text-color: #222;
             --font-main: "Georgia", "Times New Roman", Times, serif;
             --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            @media (max-width: 600px) {
+    .container {
+        margin: 0;       /* 手机上铺满，不要边距 */
+        width: 100%;
+        border-radius: 0;
+        opacity: 1;      /* 手机上不透明 */
+    }
+}
         }
 
    body {
