@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guo Liwen - Academic Homepage</title>
+    
+    <link rel="shortcut icon" href="https://liwenguo-git.github.io/logo.jpg?v=final">
+
     <style>
         /* 全局变量与基础设置 */
         :root {
@@ -11,7 +14,7 @@
             --link-color: #0056b3;
             --bg-color: #fdfdfd;
             --text-color: #222;
-            --font-main: "Georgia", "Times New Roman", Times, serif; /* 经典的学术衬线字体 */
+            --font-main: "Georgia", "Times New Roman", Times, serif;
             --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
         }
 
@@ -26,7 +29,7 @@
 
         /* 布局容器 */
         .container {
-            max-width: 800px; /* 限制宽度以获得最佳阅读体验 */
+            max-width: 800px;
             margin: 0 auto;
             padding: 40px 20px;
         }
@@ -41,37 +44,38 @@
             justify-content: space-between;
             flex-wrap: wrap;
         }
-/* --- 新增的头像样式 开始 --- */
-.header-content {
-    display: flex;
-    align-items: center; /* 让照片和文字垂直居中对齐 */
-}
 
-.avatar {
-    width: 120px;        /* 设置照片宽度 */
-    height: 120px;       /* 设置照片高度，保持正方形 */
-    border-radius: 50%;  /* 把照片裁切成圆形 */
-    margin-right: 25px;  /* 照片和右边文字的间距 */
-    object-fit: cover;   /* 防止照片变形 */
-    border: 3px solid #fff; /* 加一个白色的边框，更好看 */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* 加一点点阴影，更有立体感 */
-}
+        /* 头部内容布局 */
+        .header-content {
+            display: flex;
+            align-items: center;
+        }
 
-/* 移动端适配：手机上照片和文字上下排列 */
-@media (max-width: 600px) {
-    .header-content {
-        flex-direction: column; /* 改为垂直排列 */
-        align-items: flex-start;
-        margin-bottom: 15px;
-    }
-    .avatar {
-        margin-right: 0;    /* 取消右边距 */
-        margin-bottom: 15px; /* 增加下边距 */
-        width: 100px;       /* 手机上稍微调小一点 */
-        height: 100px;
-    }
-}
-/* --- 新增的头像样式 结束 --- */
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-right: 25px;
+            object-fit: cover;
+            border: 3px solid #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* 移动端适配：头像部分 */
+        @media (max-width: 600px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-bottom: 15px;
+            }
+            .avatar {
+                margin-right: 0;
+                margin-bottom: 15px;
+                width: 100px;
+                height: 100px;
+            }
+        }
+
         h1 {
             font-size: 2.2rem;
             margin: 0;
@@ -83,6 +87,31 @@
             color: #666;
             font-size: 1rem;
             margin-top: 5px;
+        }
+
+        /* 右侧校徽与导航布局 */
+        .header-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .school-logo {
+            height: 85px;
+            width: auto;
+            margin-bottom: 10px;
+            opacity: 0.95;
+        }
+
+        /* 移动端适配：右侧部分 */
+        @media (max-width: 600px) {
+            .header-right {
+                align-items: flex-start;
+                margin-top: 20px;
+            }
+            .school-logo {
+                height: 65px;
+            }
         }
 
         /* 导航栏 */
@@ -99,21 +128,37 @@
             text-decoration: underline;
         }
 
+        /* 移动端适配：导航 */
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            nav {
+                margin-top: 15px;
+            }
+            nav a {
+                margin-left: 0;
+                margin-right: 15px;
+                display: inline-block;
+            }
+        }
+
         /* 通用区块样式 */
         section {
             margin-bottom: 40px;
         }
-h2 {
-    font-family: var(--font-sans);
-    font-size: 1.4rem;
-    border-bottom: 2px solid #f0f0f0;
-    padding-bottom: 5px;
-    margin-top: 0;
-    margin-bottom: 20px;
-    color: #B22222; /* <--- 修改这里 (比如改成深红色) */
-    /* text-transform: uppercase; (如果你不想全大写，可以删掉这行) */ 
-    letter-spacing: 0.5px;
-}
+
+        h2 {
+            font-family: var(--font-sans);
+            font-size: 1.4rem;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 5px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #B22222; /* 深红色标题 */
+            letter-spacing: 0.5px;
+        }
 
         p {
             margin-bottom: 15px;
@@ -138,16 +183,16 @@ h2 {
             margin-bottom: 8px;
         }
 
-        /* 论文列表特殊样式 */
+        /* 论文/笔记列表特殊样式 */
         .publication-item {
             margin-bottom: 15px;
         }
         
-      .pub-title {
-    font-weight: bold;
-    color: #B22222; /* 这里使用了和你 H2 标题一致的深红色 */
-    font-size: 1.1rem; /* 我顺便加了一点点字体大小，让它更像标题，你可以按需保留或删除 */
-}
+        .pub-title {
+            font-weight: bold;
+            color: #B22222; /* 小标题深红色 */
+            font-size: 1.1rem;
+        }
 
         .pub-authors {
             color: #555;
@@ -167,71 +212,30 @@ h2 {
             font-family: var(--font-sans);
             text-align: center;
         }
-
-        /* 移动端适配 */
-        @media (max-width: 600px) {
-            header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            nav {
-                margin-top: 15px;
-            }
-            nav a {
-                margin-left: 0;
-                margin-right: 15px;
-                display: inline-block;
-            }
-        }
-        /* --- 新增：右上角校徽与导航布局 --- */
-.header-right {
-    display: flex;
-    flex-direction: column; /* 让校徽和导航栏垂直排列 */
-    align-items: flex-end;  /* 强制靠右对齐 */
-}
-
-.school-logo {
-    height: 85px;           /* 校徽大小，可根据实际图片调整 */
-    width: auto;            /* 保持图片比例 */
-    margin-bottom: 10px;    /* 让校徽和下面的文字拉开点距离 */
-    opacity: 0.95;          /* 稍微一点点透明度，融合感更好 */
-}
-
-/* 手机端适配：屏幕变窄时，右侧内容居左或居中 */
-@media (max-width: 600px) {
-    .header-right {
-        align-items: flex-start; /* 手机上改为左对齐 */
-        margin-top: 20px;        /* 和上面拉开距离 */
-    }
-    .school-logo {
-        height: 65px; /* 手机上校徽稍微小一点 */
-    }
-}
     </style>
-<link rel="shortcut icon" href="https://liwenguo-git.github.io/logo.jpg?v=new_icon_1">
 </head>
 <body>
 
 <div class="container">
-<header>
-    <div class="header-content">
-        <img src="avatar.jpg" alt="Guo Liwen" class="avatar">
-        <div>
-            <h1>郭利文 (Guo Liwen)</h1>
-            <div class="subtitle">梦想成为代数糕薯</div>
+    <header>
+        <div class="header-content">
+            <img src="avatar.jpg" alt="Guo Liwen" class="avatar">
+            <div>
+                <h1>郭利文 (Guo Liwen)</h1>
+                <div class="subtitle">梦想成为代数糕薯</div>
+            </div>
         </div>
-    </div>
 
-    <div class="header-right">
-        <img src="sd.jpg" alt="University Logo" class="school-logo">
-        
-        <nav>
-            <a href="#about">About Me </a>
-            <a href="#Notes">Notes</a>
-            <a href="#contact">Contact</a>
-        </nav>
-    </div>
-</header>
+        <div class="header-right">
+            <img src="logo.jpg" alt="University Logo" class="school-logo">
+            
+            <nav>
+                <a href="#about">About Me</a>
+                <a href="#Notes">Notes</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
 
     <section id="about">
         <h2>About Me</h2>
@@ -241,35 +245,38 @@ h2 {
     </section>
 
     <section id="Notes">
-        <h2> Personal Notes</h2>
+        <h2>Personal Notes</h2>
+        
         <div class="publication-item">
             <span class="pub-title">分析类笔记</span><br>
             <ul>
-           <li>  数学分析.[<a href="分析记.pdf" target="_blank">PDF</a>] </li>
+               <li>数学分析.[<a href="分析记.pdf" target="_blank">PDF</a>]</li>
             </ul>
         </div>
-<div class="publication-item">
+
+        <div class="publication-item">
             <span class="pub-title">代数类笔记</span><br>
-    <ul>
-        <li>Morden Algebra, 2026.[<a href="ma.pdf" target="_blank">PDF</a>]</li>
-        <li>高等代数讲义 [<a href="lin-al.pdf" target="_blank">PDF</a>]</li>
-        <li>高等代数总结 [<a href="总结.pdf" target="_blank">PDF</a>]</li>
-          <li>本科毕业论文. [<a href="the-gra.pdf" target="_blank">PDF</a>]</li>
-    </ul>
-        </div>
-      <div class="publication-item">
-            <span class="pub-title">Beamer </span><br>
-             <ul>
-           <li>本科毕业答辩.[<a href="beamer-gra.pdf" target="_blank">PDF</a>]</li>
-           <li> sylow定理.[<a href="sylow.pdf" target="_blank">PDF</a>]</li>
+            <ul>
+                <li>Morden Algebra, 2026.[<a href="ma.pdf" target="_blank">PDF</a>]</li>
+                <li>高等代数讲义 [<a href="lin-al.pdf" target="_blank">PDF</a>]</li>
+                <li>高等代数总结 [<a href="总结.pdf" target="_blank">PDF</a>]</li>
+                <li>本科毕业论文. [<a href="the-gra.pdf" target="_blank">PDF</a>]</li>
             </ul>
         </div>
-</section>
+
+        <div class="publication-item">
+            <span class="pub-title">Beamer</span><br>
+            <ul>
+               <li>本科毕业答辩.[<a href="beamer-gra.pdf" target="_blank">PDF</a>]</li>
+               <li>Sylow定理.[<a href="sylow.pdf" target="_blank">PDF</a>]</li>
+            </ul>
+        </div>
+    </section>
+
     <section id="contact">
         <h2>Contact</h2>
         <p>
             <strong>公众号:</strong> liviovo<br>
-            
             <strong>QQ:</strong> 3266237478<br>
         </p>
     </section>
