@@ -18,21 +18,32 @@
             --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
         }
 
-        body {
-            font-family: var(--font-main);
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 0;
-        }
+   body {
+    font-family: var(--font-main);
+    line-height: 1.6;
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    
+    /* --- 新增背景图设置 --- */
+    background-image: url('bg.png'); /* 背景图片路径 */
+    background-size: cover;          /* 让图片自动铺满屏幕 */
+    background-position: center;     /* 图片居中显示 */
+    background-attachment: fixed;    /* 关键：滚动网页时，背景图固定不动（很高级的效果） */
+    background-repeat: no-repeat;    /* 防止图片重复平铺 */
+}
 
         /* 布局容器 */
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
+       .container {
+    max-width: 800px;
+    margin: 40px auto; /* 上下保持间距 */
+    padding: 40px 40px; /* 内部留白稍微多一点 */
+    
+    /* --- 新增白底卡片效果 --- */
+    background-color: rgba(255, 255, 255, 0.96); /* 白色背景，0.96代表微微一点点透明，很有质感 */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);     /* 给卡片加一点阴影，让它浮在背景上 */
+    border-radius: 8px;                          /* 圆角边框 */
+}
 
         /* 头部样式 */
         header {
