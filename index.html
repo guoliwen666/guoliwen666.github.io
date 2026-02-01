@@ -3,314 +3,251 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guo Liwen - Academic Homepage</title>
+    <title>Guo Liwen | Mathematics</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
-    <link rel="icon" type="image/jpeg" href="logo.jpg">
+    <link rel="shortcut icon" href="https://guoliwen666.github.io/logo.jpg?v=final">
 
     <style>
-        /* 全局变量与基础设置 */
         :root {
-            --primary-color: #333;
-            --link-color: #0056b3;
-            --bg-color: #fdfdfd;
-            --text-color: #222;
-            --font-main: "Georgia", "Times New Roman", Times, serif;
-            --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            @media (max-width: 600px) {
-    .container {
-        margin: 0;       /* 手机上铺满，不要边距 */
-        width: 100%;
-        border-radius: 0;
-        opacity: 1;      /* 手机上不透明 */
-    }
-}
+            --bg-color: #f9f7f1;      /* 暖米色背景 */
+            --card-bg: #ffffff;       /* 卡片背景 */
+            --text-main: #4a4a4a;     /* 主要文字色 */
+            --text-light: #888888;    /* 次要文字色 */
+            --accent-color: #8b5a2b;  /* 强调色（棕褐色） */
+            --font-serif: "Georgia", "Noto Serif SC", "Songti SC", serif;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
-   body {
-    font-family: var(--font-main);
-    line-height: 1.6;
-    color: var(--text-color);
-    margin: 0;
-    padding: 0;
-    
-    /* --- 新增背景图设置 --- */
-    background-image: url('bg1.png'); /* 背景图片路径 */
-    background-size: cover;          /* 让图片自动铺满屏幕 */
-    background-position: center;     /* 图片居中显示 */
-    background-attachment: fixed;    /* 关键：滚动网页时，背景图固定不动（很高级的效果） */
-    background-repeat: no-repeat;    /* 防止图片重复平铺 */
-}
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-serif);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.8;
+        }
 
-        /* 布局容器 */
-       .container {
-    max-width: 800px;
-    margin: 40px auto; /* 上下保持间距 */
-    padding: 40px 40px; /* 内部留白稍微多一点 */
-    
-    /* --- 新增白底卡片效果 --- */
-    background-color: rgba(255, 255, 255, 0.96); /* 白色背景，0.96代表微微一点点透明，很有质感 */
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);     /* 给卡片加一点阴影，让它浮在背景上 */
-    border-radius: 8px;                          /* 圆角边框 */
-}
+        .container {
+            max-width: 700px; /* 稍微窄一点，更有书籍感 */
+            margin: 0 auto;
+        }
 
         /* 头部样式 */
         header {
-            border-bottom: 1px solid #eee;
-            padding-bottom: 20px;
-            margin-bottom: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-
-        /* 头部内容布局 */
-        .header-content {
-            display: flex;
-            align-items: center;
+            text-align: center;
+            margin-bottom: 50px;
+            padding-top: 30px;
         }
 
         .avatar {
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
-            margin-right: 25px;
             object-fit: cover;
-            border: 3px solid #fff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        /* 移动端适配：头像部分 */
-        @media (max-width: 600px) {
-            .header-content {
-                flex-direction: column;
-                align-items: flex-start;
-                margin-bottom: 15px;
-            }
-            .avatar {
-                margin-right: 0;
-                margin-bottom: 15px;
-                width: 100px;
-                height: 100px;
-            }
+            border: 4px solid var(--card-bg);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 15px;
         }
 
         h1 {
-            font-size: 2.2rem;
-            margin: 0;
+            font-size: 1.8rem;
+            margin: 10px 0;
             font-weight: normal;
+            color: #2c2c2c;
         }
 
         .subtitle {
             font-family: var(--font-sans);
-            color: #666;
-            font-size: 1rem;
-            margin-top: 5px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            letter-spacing: 1px;
         }
 
-        /* 右侧校徽与导航布局 */
-        .header-right {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
+        /* 卡片通用样式 */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03); /* 非常柔和的阴影 */
+            transition: transform 0.2s ease;
         }
 
-        .school-logo {
-            height: 85px;
-            width: auto;
-            margin-bottom: 10px;
-            opacity: 0.95;
-        }
-
-        /* 移动端适配：右侧部分 */
-       /* 移动端适配 */
-@media (max-width: 600px) {
-    /* 其他代码不用动... */
-
-    .school-logo {
-        display: none;  /* <--- 核心修改：在手机上彻底隐藏校徽 */
-    }
-    
-    /* 可选：因为校徽没了，可以把导航栏往上提一点，减少留白 */
-    .header-right {
-        margin-top: 10px; 
-        align-items: flex-start;
-    }
-}
-
-        /* 导航栏 */
-        nav a {
-            margin-left: 15px;
-            text-decoration: none;
-            color: #555;
-            font-family: var(--font-sans);
-            font-size: 0.95rem;
-        }
-        
-        nav a:hover {
-            color: var(--link-color);
-            text-decoration: underline;
-        }
-
-        /* 移动端适配：导航 */
-        @media (max-width: 600px) {
-            header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            nav {
-                margin-top: 15px;
-            }
-            nav a {
-                margin-left: 0;
-                margin-right: 15px;
-                display: inline-block;
-            }
-        }
-
-        /* 通用区块样式 */
-        section {
-            margin-bottom: 40px;
+        /* 鼠标悬停卡片上浮一点点 */
+        .card:hover {
+            transform: translateY(-2px);
         }
 
         h2 {
-            font-family: var(--font-sans);
-            font-size: 1.4rem;
-            border-bottom: 2px solid #f0f0f0;
-            padding-bottom: 5px;
+            font-size: 1.2rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
             margin-top: 0;
             margin-bottom: 20px;
-            color: #B22222; /* 深红色标题 */
-            letter-spacing: 0.5px;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        /* 标题前加个小图标装饰 */
+        h2::before {
+            content: "¶";
+            margin-right: 10px;
+            font-size: 1.4rem;
+            opacity: 0.5;
         }
 
-        p {
-            margin-bottom: 15px;
-            text-align: justify;
-        }
-
+        /* 链接样式 */
         a {
-            color: var(--link-color);
+            color: var(--accent-color);
             text-decoration: none;
+            border-bottom: 1px dotted var(--accent-color);
         }
-
         a:hover {
-            text-decoration: underline;
+            border-bottom-style: solid;
         }
 
-        /* 列表样式 */
-        ul {
-            padding-left: 20px;
-        }
-        
-        li {
-            margin-bottom: 8px;
+        /* 笔记网格布局 */
+        .notes-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
 
-        /* 论文/笔记列表特殊样式 */
-        .publication-item {
-            margin-bottom: 15px;
-        }
-        
-        .pub-title {
-            font-weight: bold;
-            color: #B22222; /* 小标题深红色 */
-            font-size: 1.1rem;
-        }
-
-        .pub-authors {
-            color: #555;
-        }
-
-        .pub-venue {
-            font-style: italic;
-        }
-
-        /* 页脚 */
-        footer {
-            margin-top: 60px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-            font-size: 0.85rem;
-            color: #888;
-            font-family: var(--font-sans);
+        .note-item {
+            background: #fafafa; /* 笔记小卡片底色稍微灰一点 */
+            padding: 15px;
+            border-radius: 10px;
             text-align: center;
+        }
+        
+        .note-title {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .note-desc {
+            font-size: 0.85rem;
+            color: #999;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* 公式卡片样式 */
+        .formula-box {
+            text-align: center;
+            padding: 10px;
+            margin: 15px 0;
+            background: #fdfdfd;
+            border: 1px dashed #eee;
+            border-radius: 8px;
+        }
+        
+        .formula-name {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        /* 手机端适配 */
+        @media (max-width: 600px) {
+            .notes-grid {
+                grid-template-columns: 1fr; /* 手机变单列 */
+            }
+            .card {
+                padding: 20px; /* 手机上内边距小一点 */
+            }
+        }
+        
+        footer {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #bbb;
+            margin-top: 50px;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
+    
     <header>
-        <div class="header-content">
-            <img src="logo.jpg" alt="Guo Liwen" class="avatar">
-            <div>
-                <h1>郭利文 (Guo Liwen)</h1>
-                <div class="subtitle">梦想成为代数糕薯</div>
-            </div>
-        </div>
-
-        <div class="header-right">
-            <img src="sd.jpg" alt="University Logo" class="school-logo">
-            
-            <nav>
-                <a href="#about">About Me</a>
-                <a href="#Notes">Notes</a>
-                <a href="#contact">Contact</a>
-            </nav>
-        </div>
+        <img src="avatar.jpg" alt="Guo Liwen" class="avatar">
+        <h1>郭利文 (Guo Liwen)</h1>
+        <div class="subtitle">梦想成为代数糕薯 | Math Major</div>
     </header>
 
-    <section id="about">
+    <div class="card">
         <h2>About Me</h2>
         <p>
-            欢迎来到我的个人主页，我是一名普通数学系学生，在这里主要记录我的学习笔记.
+            这里是我的个人主页。如同大部分数学系学生一样，我在这里记录那些令我着迷的结构与证明。
         </p>
-    </section>
-
-    <section id="Notes">
-        <h2>Personal Notes</h2>
-        
-        <div class="publication-item">
-            <span class="pub-title">分析类笔记</span><br>
-            <ul>
-               <li>数学分析.[<a href="分析记.pdf" target="_blank">PDF</a>]</li>
-            </ul>
-        </div>
-
-        <div class="publication-item">
-            <span class="pub-title">代数类笔记</span><br>
-            <ul>
-                <li>Morden Algebra, 2026.[<a href="代数框架.pdf" target="_blank">PDF</a>]</li>
-                <li>Lie Algebra.[<a href="lie-al.pdf" target="_blank">PDF</a>]</li>
-                <li>高等代数讲义 [<a href="lin-al.pdf" target="_blank">PDF</a>]</li>
-                <li>高等代数总结 [<a href="总结.pdf" target="_blank">PDF</a>]</li>
-                <li>本科毕业论文. [<a href="the-gra.pdf" target="_blank">PDF</a>]</li>
-            </ul>
-        </div>
-
-        <div class="publication-item">
-            <span class="pub-title">Beamer</span><br>
-            <ul>
-               <li>本科毕业答辩.[<a href="beamer-gra.pdf" target="_blank">PDF</a>]</li>
-               <li>Sylow定理.[<a href="sylow.pdf" target="_blank">PDF</a>]</li>
-            </ul>
-        </div>
-    </section>
-
-    <section id="contact">
-        <h2>Contact</h2>
         <p>
-            <strong>公众号:</strong> liviovo<br>
-            <strong>QQ:</strong> 3266237478<br>
+            Line, from origin. 
         </p>
-    </section>
+    </div>
+
+    <div class="card">
+        <h2>Favorite Theorems</h2>
+        
+        <div class="formula-box">
+            <div class="formula-name">Class Number Formula (类数公式)</div>
+            $$ h_K = \frac{w_K \sqrt{|d_K|}}{2^{r_1} (2\pi)^{r_2} R_K} \lim_{s \to 1} (s-1)\zeta_K(s) $$
+        </div>
+
+        <div class="formula-box">
+            <div class="formula-name">Adjunction Formula (伴随公式)</div>
+            $$ \text{Hom}(F \dashv G) \cong \text{Hom}(G \dashv F) $$
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Notes & Works</h2>
+        <div class="notes-grid">
+            
+            <div class="note-item">
+                <span class="note-title">分析类笔记</span>
+                <span class="note-desc">Real Analysis, 2026</span>
+                <a href="分析记.pdf" target="_blank">Download PDF</a>
+            </div>
+
+            <div class="note-item">
+                <span class="note-title">Morden Algebra</span>
+                <span class="note-desc">Groups & Rings</span>
+                <a href="ma.pdf" target="_blank">Download PDF</a>
+            </div>
+
+            <div class="note-item">
+                <span class="note-title">本科毕业论文</span>
+                <span class="note-desc">Final Thesis</span>
+                <a href="the-gra.pdf" target="_blank">Download PDF</a>
+            </div>
+
+            <div class="note-item">
+                <span class="note-title">Beamer Slide</span>
+                <span class="note-desc">Sylow Theorems</span>
+                <a href="sylow.pdf" target="_blank">Download PDF</a>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Contact</h2>
+        <p style="text-align: center;">
+            <strong>Email:</strong> guoliwen [at] university.edu.cn<br>
+            <strong>QQ:</strong> 3266237478
+        </p>
+    </div>
 
     <footer>
-        &copy; 2026 Guo Liwen.
+        &copy; 2026 Guo Liwen. Theme inspired by Thread478.
     </footer>
 
-</div> 
+</div>
 
 </body>
 </html>
