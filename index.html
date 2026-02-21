@@ -19,396 +19,149 @@
 
         body {
             background-color: var(--bg-color);
-            /* 全局细腻的圆点网格纹理 */
             background-image: radial-gradient(rgba(139, 90, 43, 0.08) 1px, transparent 1px);
             background-size: 20px 20px; 
-            
             color: var(--text-main);
             font-family: var(--font-serif);
             margin: 0;
             padding: 20px;
             line-height: 1.8;
             transition: background-color 0.4s ease, color 0.4s ease;
-            overflow-x: hidden; /* 防止云朵飘出屏幕产生横向滚动条 */
+            overflow-x: hidden; 
         }
 
         .container {
             max-width: 700px;
             margin: 0 auto;
-            position: relative; z-index: 10; /* 确保内容在背景之上 */
+            position: relative; z-index: 10; 
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 50px;
-            padding-top: 30px;
-        }
+        header { text-align: center; margin-bottom: 50px; padding-top: 30px; }
+        .avatar { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 4px solid var(--card-bg); box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 15px; }
+        h1 { font-size: 1.8rem; margin: 10px 0; font-weight: normal; color: #2c2c2c; transition: color 0.4s ease; }
+        .subtitle { font-family: var(--font-sans); font-size: 0.9rem; color: var(--text-light); letter-spacing: 1px; }
 
-        .avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--card-bg);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            margin-bottom: 15px;
-        }
+        .card { background-color: var(--card-bg); border-radius: 16px; padding: 30px; margin-bottom: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); transition: transform 0.2s ease, background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease; }
+        .card:hover { transform: translateY(-2px); }
 
-        h1 {
-            font-size: 1.8rem;
-            margin: 10px 0;
-            font-weight: normal;
-            color: #2c2c2c;
-            transition: color 0.4s ease;
-        }
+        h2 { font-size: 1.2rem; border-bottom: 1px solid #eee; padding-bottom: 15px; margin-top: 0; margin-bottom: 20px; color: var(--accent-color); display: flex; align-items: center; }
+        h2::before { content: "¶"; margin-right: 10px; font-size: 1.4rem; opacity: 0.5; }
 
-        .subtitle {
-            font-family: var(--font-sans);
-            font-size: 0.9rem;
-            color: var(--text-light);
-            letter-spacing: 1px;
-        }
+        a { color: var(--accent-color); text-decoration: none; border-bottom: 1px dotted var(--accent-color); transition: color 0.4s ease; }
+        a:hover { border-bottom-style: solid; }
 
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-            transition: transform 0.2s ease, background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-2px);
-        }
-
-        h2 {
-            font-size: 1.2rem;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 15px;
-            margin-top: 0;
-            margin-bottom: 20px;
-            color: var(--accent-color);
-            display: flex;
+        /* --- 新增：专属胶囊简历按钮样式 --- */
+        .cv-btn {
+            display: inline-flex;
             align-items: center;
-        }
-        
-        h2::before {
-            content: "¶";
-            margin-right: 10px;
-            font-size: 1.4rem;
-            opacity: 0.5;
-        }
-
-        a {
-            color: var(--accent-color);
+            margin-top: 5px;
+            padding: 8px 22px;
+            background-color: var(--accent-color);
+            color: #fff !important; 
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-family: var(--font-sans);
             text-decoration: none;
-            border-bottom: 1px dotted var(--accent-color);
-            transition: color 0.4s ease;
+            border: none !important; 
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        a:hover {
-            border-bottom-style: solid;
-        }
-
-        .notes-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+        .cv-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 90, 43, 0.25);
         }
 
-        .note-item {
-            background: #fafafa;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            transition: background-color 0.4s ease;
-        }
-        
-        .note-title {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-        }
+        .notes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .note-item { background: #fafafa; padding: 15px; border-radius: 10px; text-align: center; transition: background-color 0.4s ease; }
+        .note-title { font-weight: bold; display: block; margin-bottom: 5px; }
+        .note-desc { font-size: 0.85rem; color: #999; margin-bottom: 10px; display: block; }
 
-        .note-desc {
-            font-size: 0.85rem;
-            color: #999;
-            margin-bottom: 10px;
-            display: block;
-        }
+        /* --- 极简音乐播放器样式 --- */
+        .music-player { position: fixed; bottom: 30px; left: 30px; background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(139, 90, 43, 0.15); padding: 8px 16px; border-radius: 30px; display: flex; align-items: center; gap: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); z-index: 1000; backdrop-filter: blur(8px); transition: all 0.4s ease; }
+        body.dark-mode .music-player { background: rgba(36, 36, 36, 0.6); border-color: rgba(255, 255, 255, 0.1); }
+        .music-btn { background: none; border: none; padding: 0; color: var(--accent-color); cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; transition: transform 0.2s; }
+        .music-btn:hover { transform: scale(1.15); }
+        body.dark-mode .music-btn { color: #d4d4d4; }
+        .song-info-wrapper { width: 90px; overflow: hidden; white-space: nowrap; position: relative; }
+        .song-title { font-size: 0.8rem; color: var(--text-main); display: inline-block; font-family: var(--font-sans); animation: scrollText 10s linear infinite; }
+        @keyframes scrollText { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
         @media (max-width: 600px) {
-            .notes-grid {
-                grid-template-columns: 1fr;
-            }
-            .card {
-                padding: 20px;
-            }
+            .notes-grid { grid-template-columns: 1fr; }
+            .card { padding: 20px; }
+            .music-player { bottom: auto; top: 20px; left: 20px; padding: 6px 12px; }
+            .song-info-wrapper { width: 70px; }
         }
 
-        /* --- 水波渐现入场动画 --- */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        /* --- 动画与深色模式 --- */
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        /* 增加了一个卡片，所以动画延迟时间顺延了 */
+        .container > header, .container > .card, footer { opacity: 0; animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+        .container > header { animation-delay: 0.1s; } 
+        .container > .card:nth-of-type(1) { animation-delay: 0.25s; } 
+        .container > .card:nth-of-type(2) { animation-delay: 0.4s; } 
+        .container > .card:nth-of-type(3) { animation-delay: 0.55s; } 
+        .container > .card:nth-of-type(4) { animation-delay: 0.7s; } 
+        footer { animation-delay: 0.85s; }
 
-        .container > header,
-        .container > .card,
-        footer {
-            opacity: 0; 
-            animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; 
-        }
+        .theme-toggle { position: fixed; top: 20px; right: 20px; background: var(--card-bg); border: 1px solid #eee; color: var(--text-main); width: 42px; height: 42px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); z-index: 1001; transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease, transform 0.2s; }
+        .theme-toggle:hover { transform: scale(1.1); }
+        body.dark-mode { --bg-color: #1a1a1a; --card-bg: #242424; --text-main: #d4d4d4; --text-light: #888; --accent-color: #d4a373; background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px); }
+        body.dark-mode .theme-toggle { border-color: #333; } body.dark-mode h2 { border-bottom-color: #333; } body.dark-mode .note-item { background: #1e1e1e; } body.dark-mode h1 { color: #e0e0e0; }
+        body.dark-mode .cv-btn { background-color: var(--accent-color); color: #1a1a1a !important; box-shadow: 0 4px 12px rgba(212, 163, 115, 0.2); }
 
-        .container > header { animation-delay: 0.1s; }
-        .container > .card:nth-of-type(1) { animation-delay: 0.25s; }
-        .container > .card:nth-of-type(2) { animation-delay: 0.4s; }
-        .container > .card:nth-of-type(3) { animation-delay: 0.55s; }
-        footer { animation-delay: 0.7s; }
+        /* --- 生态系统：风车 + 云朵 + 花草 + 波浪 + 点阵 --- */
+        .global-bg-shapes { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
+        .windmill { position: absolute; width: 100px; height: 100px; display: flex; justify-content: center; align-items: center; opacity: 0.6; }
+        .blade { position: absolute; width: 14px; height: 50px; background-color: rgba(139, 90, 43, 0.15); border: 1px solid rgba(139, 90, 43, 0.3); border-radius: 50% 50% 10% 10%; top: 50%; left: 50%; transform-origin: center bottom; }
+        body.dark-mode .blade { background-color: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.2); }
+        .blade:nth-child(1) { transform: translate(-50%, -100%) rotate(0deg); } .blade:nth-child(2) { transform: translate(-50%, -100%) rotate(90deg); } .blade:nth-child(3) { transform: translate(-50%, -100%) rotate(180deg); } .blade:nth-child(4) { transform: translate(-50%, -100%) rotate(270deg); }
+        .w1 { top: 15%; left: 8%; animation: spinWindmill 20s infinite linear; } .w2 { top: 55%; left: 88%; animation: spinWindmill 28s infinite linear reverse; scale: 1.2; } .w3 { top: 75%; left: 18%; animation: spinWindmill 24s infinite linear; scale: 0.8; } .w4 { top: 30%; left: 75%; animation: spinWindmill 22s infinite linear reverse; scale: 0.9; opacity: 0.4; } .w5 { top: 10%; left: 50%; animation: spinWindmill 30s infinite linear; scale: 0.6; opacity: 0.3; } .w6 { top: 85%; left: 70%; animation: spinWindmill 26s infinite linear reverse; scale: 1.1; }
+        @keyframes spinWindmill { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* --- 深色模式核心样式 --- */
-        .theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--card-bg);
-            border: 1px solid #eee;
-            color: var(--text-main);
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            z-index: 1001; /* 确保按钮在最上层 */
-            transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease, transform 0.2s;
-        }
+        .cloud { position: absolute; background: rgba(255, 255, 255, 0.4); border-radius: 100px; filter: blur(8px); animation: floatCloud linear infinite; opacity: 0.7; }
+        body.dark-mode .cloud { background: rgba(255, 255, 255, 0.08); filter: blur(15px); }
+        .c1 { width: 120px; height: 40px; top: 10%; left: -150px; animation-duration: 60s; } .c2 { width: 180px; height: 55px; top: 25%; left: -200px; animation-duration: 85s; animation-delay: 5s; } .c3 { width: 90px; height: 30px; top: 5%; left: -100px; animation-duration: 45s; animation-delay: 15s;}
+        @keyframes floatCloud { from { transform: translateX(0); } to { transform: translateX(120vw); } }
 
-        .theme-toggle:hover {
-            transform: scale(1.1);
-        }
-
-        body.dark-mode {
-            --bg-color: #1a1a1a;       
-            --card-bg: #242424;        
-            --text-main: #d4d4d4;      
-            --text-light: #888;        
-            --accent-color: #d4a373;  
-            /* 深色模式下的网格纹理 */ 
-            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-        }
-
-        body.dark-mode .theme-toggle { border-color: #333; }
-        body.dark-mode h2 { border-bottom-color: #333; }
-        body.dark-mode .note-item { background: #1e1e1e; }
-        body.dark-mode h1 { color: #e0e0e0; }
-
-        /* =========================================
-           全局动态生态系统：风车 + 云朵 + 花草 + 波浪 + 点阵
-           ========================================= */
-
-        /* --- 1. 全局悬浮装饰层 (容器) --- */
-        .global-bg-shapes {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -1; 
-            pointer-events: none; 
-        }
-
-        /* --- 风车样式 --- */
-        .windmill {
-            position: absolute;
-            width: 100px; height: 100px;
-            display: flex; justify-content: center; align-items: center;
-            opacity: 0.6;
-        }
-        .blade {
-            position: absolute;
-            width: 14px; height: 50px;
-            background-color: rgba(139, 90, 43, 0.15); 
-            border: 1px solid rgba(139, 90, 43, 0.3);  
-            border-radius: 50% 50% 10% 10%; 
-            top: 50%; left: 50%;
-            transform-origin: center bottom; 
-        }
-        body.dark-mode .blade {
-            background-color: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-        .blade:nth-child(1) { transform: translate(-50%, -100%) rotate(0deg); }
-        .blade:nth-child(2) { transform: translate(-50%, -100%) rotate(90deg); }
-        .blade:nth-child(3) { transform: translate(-50%, -100%) rotate(180deg); }
-        .blade:nth-child(4) { transform: translate(-50%, -100%) rotate(270deg); }
-
-        /* 风车位置与动画 */
-        .w1 { top: 15%; left: 8%; animation: spinWindmill 20s infinite linear; }
-        .w2 { top: 55%; left: 88%; animation: spinWindmill 28s infinite linear reverse; scale: 1.2; }
-        .w3 { top: 75%; left: 18%; animation: spinWindmill 24s infinite linear; scale: 0.8; }
-        .w4 { top: 30%; left: 75%; animation: spinWindmill 22s infinite linear reverse; scale: 0.9; opacity: 0.4; }
-        .w5 { top: 10%; left: 50%; animation: spinWindmill 30s infinite linear; scale: 0.6; opacity: 0.3; }
-        .w6 { top: 85%; left: 70%; animation: spinWindmill 26s infinite linear reverse; scale: 1.1; }
-
-        @keyframes spinWindmill {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* --- 新增：漂浮的白云 --- */
-        .cloud {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.4);
-            border-radius: 100px; /* 胶囊形状 */
-            filter: blur(8px); /* 柔化边缘 */
-            animation: floatCloud linear infinite;
-            opacity: 0.7;
-        }
-        body.dark-mode .cloud {
-            background: rgba(255, 255, 255, 0.08); /* 深色模式下云朵变暗 */
-            filter: blur(15px);
-        }
-
-        .c1 { width: 120px; height: 40px; top: 10%; left: -150px; animation-duration: 60s; }
-        .c2 { width: 180px; height: 55px; top: 25%; left: -200px; animation-duration: 85s; animation-delay: 5s; }
-        .c3 { width: 90px;  height: 30px; top: 5%;  left: -100px; animation-duration: 45s; animation-delay: 15s;}
-
-        @keyframes floatCloud {
-            from { transform: translateX(0); }
-            to { transform: translateX(120vw); } /* 飘过整个屏幕 */
-        }
-
-        /* --- 2. 底部生态页脚 (波浪+植物+点阵) --- */
-        footer {
-            position: relative;
-            overflow: hidden; 
-            text-align: center;
-            font-size: 0.8rem;
-            color: #bbb;
-            margin: 50px -20px -20px -20px; 
-            padding-top: 220px; 
-            padding-bottom: 50px;
-            border-radius: 0; 
-        }
-
-        /* 新增：地平线处的抽象花草容器 */
-        .vegetation {
-            position: absolute;
-            top: 218px; /* 放置在地平线位置 */
-            left: 0;
-            width: 100%;
-            height: 50px;
-            z-index: 2;
-            display: flex;
-            justify-content: space-around;
-            pointer-events: none;
-            opacity: 0.4;
-        }
-        body.dark-mode .vegetation { opacity: 0.2; }
-
-        /* 抽象植物造型 */
-        .plant {
-            position: relative;
-            width: 2px;
-            background: var(--accent-color);
-            transform-origin: bottom center;
-            animation: swayPlant 4s ease-in-out infinite alternate;
-        }
-        /* 草 */
-        .grass { height: 25px; }
-        /* 花朵 (用伪元素画圆头) */
-        .flower { height: 40px; }
-        .flower::after {
-            content: ''; position: absolute; top: -6px; left: -3px;
-            width: 8px; height: 8px; border-radius: 50%;
-            background: var(--accent-color);
-        }
+        footer { position: relative; overflow: hidden; text-align: center; font-size: 0.8rem; color: #bbb; margin: 50px -20px -20px -20px; padding-top: 220px; padding-bottom: 50px; border-radius: 0; }
         
-        /* 植物摇摆动画 */
-        @keyframes swayPlant {
-            from { transform: rotate(-5deg); }
-            to { transform: rotate(5deg); }
-        }
+        .vegetation { position: absolute; top: 218px; left: 0; width: 100%; height: 50px; z-index: 2; display: flex; justify-content: space-around; pointer-events: none; opacity: 0.4; }
+        body.dark-mode .vegetation { opacity: 0.2; }
+        .plant { position: relative; width: 2px; background: var(--accent-color); transform-origin: bottom center; animation: swayPlant 4s ease-in-out infinite alternate; }
+        .grass { height: 25px; } .flower { height: 40px; } .flower::after { content: ''; position: absolute; top: -6px; left: -3px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent-color); }
+        @keyframes swayPlant { from { transform: rotate(-5deg); } to { transform: rotate(5deg); } }
 
-        /* 波浪样式 */
-        .wave {
-            position: absolute;
-            left: 50%;
-            width: 4000px;  
-            height: 4000px;
-            margin-left: -2000px; 
-            border-radius: 43%;   
-            transform-origin: 50% 50%;
-        }
-        .wave-bg {
-            bottom: -3750px; 
-            background-color: rgba(212, 163, 115, 0.08); 
-            animation: spinWave 45s infinite linear;
-            z-index: 0;
-        }
-        .wave-fg {
-            bottom: -3780px; 
-            background-color: rgba(212, 163, 115, 0.12);
-            animation: spinWave 60s infinite linear;
-            z-index: 1;
-        }
-        body.dark-mode .wave-bg { background-color: rgba(255, 255, 255, 0.02); }
-        body.dark-mode .wave-fg { background-color: rgba(255, 255, 255, 0.04); }
+        .wave { position: absolute; left: 50%; width: 4000px; height: 4000px; margin-left: -2000px; border-radius: 43%; transform-origin: 50% 50%; }
+        .wave-bg { bottom: -3750px; background-color: rgba(212, 163, 115, 0.08); animation: spinWave 45s infinite linear; z-index: 0; }
+        .wave-fg { bottom: -3780px; background-color: rgba(212, 163, 115, 0.12); animation: spinWave 60s infinite linear; z-index: 1; }
+        body.dark-mode .wave-bg { background-color: rgba(255, 255, 255, 0.02); } body.dark-mode .wave-fg { background-color: rgba(255, 255, 255, 0.04); }
+        @keyframes spinWave { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        @keyframes spinWave {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        .rolling-dots { position: absolute; bottom: 0; left: 0; width: 100%; height: 160px; background-image: radial-gradient(rgba(139, 90, 43, 0.15) 3.5px, transparent 4.5px); background-size: 28px 28px; z-index: 1; -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 70%); mask-image: linear-gradient(to bottom, transparent 0%, black 70%); animation: scrollDots 15s linear infinite; pointer-events: none; }
+        body.dark-mode .rolling-dots { background-image: radial-gradient(rgba(255, 255, 255, 0.08) 3.5px, transparent 4.5px); }
+        @keyframes scrollDots { from { background-position-x: 0; } to { background-position-x: -280px; } }
 
-        /* 滚动点阵样式 */
-        .rolling-dots {
-            position: absolute;
-            bottom: 0; left: 0; width: 100%; height: 160px; 
-            background-image: radial-gradient(rgba(139, 90, 43, 0.15) 3.5px, transparent 4.5px);
-            background-size: 28px 28px; 
-            z-index: 1; 
-            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 70%);
-            mask-image: linear-gradient(to bottom, transparent 0%, black 70%);
-            animation: scrollDots 15s linear infinite;
-            pointer-events: none;
-        }
-        body.dark-mode .rolling-dots {
-            background-image: radial-gradient(rgba(255, 255, 255, 0.08) 3.5px, transparent 4.5px);
-        }
-        @keyframes scrollDots {
-            from { background-position-x: 0; }
-            to { background-position-x: -280px; } 
-        }
-
-        /* 水印文字 */
-        .footer-bg-text {
-            position: absolute; bottom: -10px; right: 40px;    
-            font-size: 6.5rem; font-weight: bold;
-            font-family: "Georgia", "Times New Roman", serif;
-            color: var(--accent-color); opacity: 0.08; 
-            text-align: right; line-height: 0.85; 
-            z-index: 2; pointer-events: none;
-        }
+        .footer-bg-text { position: absolute; bottom: -10px; right: 40px; font-size: 6.5rem; font-weight: bold; font-family: "Georgia", "Times New Roman", serif; color: var(--accent-color); opacity: 0.08; text-align: right; line-height: 0.85; z-index: 2; pointer-events: none; }
         body.dark-mode .footer-bg-text { color: #ffffff; opacity: 0.03; }
 
         @media (max-width: 600px) {
-            footer { padding-top: 150px; }
-            .vegetation { top: 148px; } /* 手机端调整植物位置 */
-            .footer-bg-text { font-size: 4rem; right: 15px; }
-            .wave-bg { bottom: -3850px; } 
-            .wave-fg { bottom: -3870px; }
-            .rolling-dots { height: 120px; }
-            .windmill { scale: 0.7; }
+            footer { padding-top: 150px; } .vegetation { top: 148px; } .footer-bg-text { font-size: 4rem; right: 15px; } .wave-bg { bottom: -3850px; } .wave-fg { bottom: -3870px; } .rolling-dots { height: 120px; } .windmill { scale: 0.7; }
         }
     </style>
 </head>
 <body>
 
-    <div class="global-bg-shapes">
-        <div class="cloud c1"></div>
-        <div class="cloud c2"></div>
-        <div class="cloud c3"></div>
+    <div class="music-player" id="music-player">
+        <button class="music-btn" id="play-btn" title="Play/Pause">▶</button>
+        <div class="song-info-wrapper">
+            <span class="song-title" id="song-title">Music Loading...</span>
+        </div>
+        <button class="music-btn" id="next-btn" title="Next Song">⏭</button>
+        <audio id="audio-element"></audio>
+    </div>
 
+    <div class="global-bg-shapes">
+        <div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div>
         <div class="windmill w1"><div class="blade"></div><div class="blade"></div><div class="blade"></div><div class="blade"></div></div>
         <div class="windmill w2"><div class="blade"></div><div class="blade"></div><div class="blade"></div><div class="blade"></div></div>
         <div class="windmill w3"><div class="blade"></div><div class="blade"></div><div class="blade"></div><div class="blade"></div></div>
@@ -434,89 +187,100 @@
         </div>
 
         <div class="card">
+            <h2>Curriculum Vitae</h2>
+            <div style="margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                    <strong style="color: var(--text-main); font-size: 1.05rem;">常州大学 (Changzhou University)</strong>
+                    <span style="font-size: 0.85rem; color: var(--text-light);">Expected 2026</span>
+                </div>
+                <div style="font-size: 0.95rem; color: var(--text-light); margin-top: 5px;">
+                    应用数学 本科 (B.S. in Applied Mathematics)
+                </div>
+            </div>
+            
+            <a href="viewer.html?file=resume.pdf&title=Guo Liwen - Resume" class="cv-btn">
+                📄 View Full Resume
+            </a>
+        </div>
+
+        <div class="card">
             <h2>Notes & Works</h2>
             <div class="notes-grid">
-                
-                <div class="note-item">
-                    <span class="note-title">Analysis</span>
-                    <span class="note-desc">Real Analysis & More</span>
-                    <a href="viewer.html?file=分析记.pdf&title=数学分析基础整理">View List →</a>
-                </div>
-
-                <div class="note-item">
-                    <span class="note-title">Algebra</span>
-                    <span class="note-desc">Groups, Rings & Thesis</span>
-                    <a href="algebra.html">View List →</a>
-                </div>
-
-                <div class="note-item">
-                    <span class="note-title">Beamer Slide</span>
-                    <span class="note-desc">Presentation & Talks</span>
-                    <a href="beamer.html">View List →</a>
-                </div>
-
-                <div class="note-item">
-                    <span class="note-title">Misc & Thoughts</span>
-                    <span class="note-desc">Essays, Reading & Life</span>
-                    <a href="misc.html">View List →</a>
-                </div>
-                
+                <div class="note-item"><span class="note-title">Analysis</span><span class="note-desc">Real Analysis & More</span><a href="viewer.html?file=分析记.pdf&title=数学分析基础整理">View List →</a></div>
+                <div class="note-item"><span class="note-title">Algebra</span><span class="note-desc">Groups, Rings & Thesis</span><a href="algebra.html">View List →</a></div>
+                <div class="note-item"><span class="note-title">Beamer Slide</span><span class="note-desc">Presentation & Talks</span><a href="beamer.html">View List →</a></div>
+                <div class="note-item"><span class="note-title">Misc & Thoughts</span><span class="note-desc">Essays, Reading & Life</span><a href="misc.html">View List →</a></div>
             </div> 
         </div>
 
         <div class="card">
             <h2>Contact</h2>
-            <p style="text-align: center;">
-                <strong>公众号:</strong> liviovo <br>
-                <strong>QQ:</strong> 3266237478
-            </p>
+            <p style="text-align: center;"><strong>公众号:</strong> liviovo <br><strong>QQ:</strong> 3266237478</p>
         </div>
         
     </div>
 
     <footer>
         <div class="vegetation">
-            <div class="plant grass" style="animation-delay: 0s;"></div>
-            <div class="plant flower" style="animation-delay: 1s;"></div>
-            <div class="plant grass" style="animation-delay: 0.5s; scale: 0.8;"></div>
-            <div class="plant grass" style="animation-delay: 2s;"></div>
-            <div class="plant flower" style="animation-delay: 1.5s; scale: 1.1;"></div>
-            <div class="plant grass" style="animation-delay: 3s; scale: 0.9;"></div>
-            <div class="plant grass" style="animation-delay: 0.2s;"></div>
+            <div class="plant grass" style="animation-delay: 0s;"></div><div class="plant flower" style="animation-delay: 1s;"></div><div class="plant grass" style="animation-delay: 0.5s; scale: 0.8;"></div><div class="plant grass" style="animation-delay: 2s;"></div><div class="plant flower" style="animation-delay: 1.5s; scale: 1.1;"></div><div class="plant grass" style="animation-delay: 3s; scale: 0.9;"></div><div class="plant grass" style="animation-delay: 0.2s;"></div>
         </div>
-
-        <div class="wave wave-bg"></div>
-        <div class="wave wave-fg"></div>
-        
+        <div class="wave wave-bg"></div><div class="wave wave-fg"></div>
         <div class="rolling-dots"></div>
-        
         <div class="footer-bg-text">THE<br>RISING<br>SEA</div>
-        
-        <div style="position: relative; z-index: 3;">
-            <div>&copy; 2026 Guo Liwen. Theme inspired by Thread478.</div>
-        </div>
+        <div style="position: relative; z-index: 3;"><div>&copy; 2026 Guo Liwen. Theme inspired by Thread478.</div></div>
     </footer>
 
     <script>
+        // 深色模式逻辑
         const themeToggleBtn = document.getElementById('theme-toggle');
         const body = document.body;
-        
         const currentTheme = localStorage.getItem('theme');
-        if (currentTheme === 'dark') {
-            body.classList.add('dark-mode');
-            themeToggleBtn.innerText = '☀️'; 
-        }
-
+        if (currentTheme === 'dark') { body.classList.add('dark-mode'); themeToggleBtn.innerText = '☀️'; }
         themeToggleBtn.addEventListener('click', () => {
             body.classList.toggle('dark-mode');
             if (body.classList.contains('dark-mode')) {
-                themeToggleBtn.innerText = '☀️';
-                localStorage.setItem('theme', 'dark');
+                themeToggleBtn.innerText = '☀️'; localStorage.setItem('theme', 'dark');
             } else {
-                themeToggleBtn.innerText = '🌙';
-                localStorage.setItem('theme', 'light');
+                themeToggleBtn.innerText = '🌙'; localStorage.setItem('theme', 'light');
             }
         });
+
+        // 音乐播放器逻辑
+        const playlist = [
+            { title: "巴赫 - 无伴奏大提琴组曲", src: "music/song1.mp3" },
+            { title: "周杰伦 - 晴天", src: "music/song2.mp3" }
+        ];
+        
+        let currentSongIndex = 0;
+        const audio = document.getElementById('audio-element');
+        const playBtn = document.getElementById('play-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const songTitle = document.getElementById('song-title');
+
+        function loadSong(index) {
+            audio.src = playlist[index].src;
+            songTitle.innerText = playlist[index].title;
+        }
+
+        function togglePlay() {
+            if (audio.paused) {
+                audio.play().then(() => { playBtn.innerText = "⏸"; }).catch(err => { songTitle.innerText = "Please add audio file"; });
+            } else {
+                audio.pause(); playBtn.innerText = "▶";
+            }
+        }
+
+        function nextSong() {
+            currentSongIndex = (currentSongIndex + 1) % playlist.length;
+            loadSong(currentSongIndex);
+            if (playBtn.innerText === "⏸") { audio.play(); }
+        }
+
+        playBtn.addEventListener('click', togglePlay);
+        nextBtn.addEventListener('click', nextSong);
+        audio.addEventListener('ended', nextSong);
+
+        loadSong(currentSongIndex);
     </script>
 
 </body>
