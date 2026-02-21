@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF 阅读 | Guo Liwen</title>
+    <link rel="shortcut icon" href="https://guoliwen666.github.io/logo1.jpg?v=final">
+    
+    <style>
+        :root {
+            --bg-color: #f9f7f1;
+            --text-main: #4a4a4a;
+            --accent-color: #8b5a2b;
+        }
+
+        body.dark-mode {
+            --bg-color: #1a1a1a;
+            --text-main: #d4d4d4;
+            --accent-color: #d4a373;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: "Georgia", "Noto Serif SC", serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh; /* 撑满整个屏幕的高度 */
+            overflow: hidden; /* 防止页面本身出现滚动条，只让 PDF 滚动 */
+        }
+
+        /* 顶部导航栏 */
+        .top-bar {
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            background-color: var(--bg-color);
+            z-index: 10;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--accent-color);
+            color: #fff;
+        }
+
+        .doc-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        /* PDF 承载区 */
+        .pdf-container {
+            flex-grow: 1; /* 自动填满剩下的屏幕空间 */
+            width: 100%;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* 手机端适配：稍微缩小标题 */
+        @media (max-width: 600px) {
+            .doc-title { font-size: 0.9rem; }
+            .top-bar { padding: 10px 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="javascript:history.back()" class="back-btn">← Back</a>
+        <span class="doc-title" id="doc-title">正在加载文档...</span>
+        <span style="width: 60px;"></span> </div>
+
+    <div class="pdf-container">
+        <iframe id="pdf-frame" src=""></iframe>
+    </div>
+
+    <script>
+        // 1. 同步深色模式：检查你在主页是否开启了月亮模式
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+        }
+
+        // 2. 魔法：从网址里提取你要看的 PDF 文件名和标题
+        const urlParams = new URLSearchParams(window.location.search);
+        const fileUrl = urlParams.get('file');
+        const fileTitle = urlParams.get('title') || 'PDF Document';
+
+        // 3. 把 PDF 塞进网页里
+        if (fileUrl) {
+            document.getElementById('pdf-frame').src = fileUrl;
+            document.getElementById('doc-title').innerText = fileTitle;
+            document.title = fileTitle + " | Guo Liwen"; // 连浏览器标签页名字都帮你改好
+        } else {
+            document.getElementById('doc-title').innerText = "❌ 未找到文件";
+        }
+    </script>
+
+</body>
+</html>
