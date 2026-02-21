@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guo Liwen | Mathematics</title>
-    <link rel="shortcut icon" href="[https://guoliwen666.github.io/logo1.jpg?v=final](https://guoliwen666.github.io/logo1.jpg?v=final)">
+    <link rel="shortcut icon" href="https://guoliwen666.github.io/logo1.jpg?v=final">
 
     <style>
         :root {
-            --bg-color: #f9f7f1;      /* 暖米色背景 */
-            --card-bg: #ffffff;       /* 卡片背景 */
-            --text-main: #4a4a4a;     /* 主要文字色 */
-            --text-light: #888888;    /* 次要文字色 */
-            --accent-color: #8b5a2b;  /* 强调色（棕褐色） */
+            --bg-color: #f9f7f1;      
+            --card-bg: #ffffff;       
+            --text-main: #4a4a4a;     
+            --text-light: #888888;    
+            --accent-color: #8b5a2b;  
             --font-serif: "Georgia", "Noto Serif SC", "Songti SC", serif;
             --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
@@ -24,7 +24,6 @@
             margin: 0;
             padding: 20px;
             line-height: 1.8;
-            /* 全局平滑过渡动画 */
             transition: background-color 0.4s ease, color 0.4s ease;
         }
 
@@ -33,7 +32,6 @@
             margin: 0 auto;
         }
 
-        /* 头部样式 */
         header {
             text-align: center;
             margin-bottom: 50px;
@@ -65,7 +63,6 @@
             letter-spacing: 1px;
         }
 
-        /* 卡片通用样式 */
         .card {
             background-color: var(--card-bg);
             border-radius: 16px;
@@ -134,7 +131,153 @@
             display: block;
         }
 
-        /* 手机端适配 */
         @media (max-width: 600px) {
             .notes-grid {
-                grid-template
+                grid-template-columns: 1fr;
+            }
+            .card {
+                padding: 20px;
+            }
+        }
+        
+        footer {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #bbb;
+            margin-top: 50px;
+        }
+
+        /* --- 深色模式核心样式 --- */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            border: 1px solid #eee;
+            color: var(--text-main);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            z-index: 1000;
+            transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease, transform 0.2s;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        body.dark-mode {
+            --bg-color: #1a1a1a;       
+            --card-bg: #242424;        
+            --text-main: #d4d4d4;      
+            --text-light: #888;        
+            --accent-color: #d4a373;   
+        }
+
+        body.dark-mode .theme-toggle {
+            border-color: #333;
+        }
+        body.dark-mode h2 {
+            border-bottom-color: #333;
+        }
+        body.dark-mode .note-item {
+            background: #1e1e1e;       
+        }
+        body.dark-mode h1 {
+            color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+
+    <button class="theme-toggle" id="theme-toggle" title="切换深色模式">🌙</button>
+
+    <div class="container">
+        
+        <header>
+            <img src="logo3.jpg" alt="Guo Liwen" class="avatar">
+            <h1>livi</h1>
+            <div class="subtitle">梦想成为代数糕薯 | Math Major</div>
+        </header>
+
+        <div class="card">
+            <h2>About Me</h2>
+            <p>这里算作我个人的一个小屋，装着一些感悟与数学上的痕迹</p>
+            <p>Line, from origin.</p>
+        </div>
+
+        <div class="card">
+            <h2>Notes & Works</h2>
+            <div class="notes-grid">
+                
+                <div class="note-item">
+                    <span class="note-title">Analysis</span>
+                    <span class="note-desc">Real Analysis & More</span>
+                    <a href="analysis.html">View List →</a>
+                </div>
+
+                <div class="note-item">
+                    <span class="note-title">Algebra</span>
+                    <span class="note-desc">Groups, Rings & Thesis</span>
+                    <a href="algebra.html">View List →</a>
+                </div>
+
+                <div class="note-item">
+                    <span class="note-title">Beamer Slide</span>
+                    <span class="note-desc">Presentation & Talks</span>
+                    <a href="beamer.html">View List →</a>
+                </div>
+
+                <div class="note-item">
+                    <span class="note-title">Misc & Thoughts</span>
+                    <span class="note-desc">Essays, Reading & Life</span>
+                    <a href="misc.html">View List →</a>
+                </div>
+                
+            </div> 
+        </div>
+
+        <div class="card">
+            <h2>Contact</h2>
+            <p style="text-align: center;">
+                <strong>公众号:</strong> liviovo <br>
+                <strong>QQ:</strong> 3266237478
+            </p>
+        </div>
+
+        <footer>
+            &copy; 2026 Guo Liwen. 
+        </footer>
+
+    </div>
+
+    <script>
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const body = document.body;
+        
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark') {
+            body.classList.add('dark-mode');
+            themeToggleBtn.innerText = '☀️'; 
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                themeToggleBtn.innerText = '☀️';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeToggleBtn.innerText = '🌙';
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    </script>
+
+</body>
+</html>
