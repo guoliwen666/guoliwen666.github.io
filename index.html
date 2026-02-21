@@ -204,10 +204,10 @@
         body.dark-mode h1 { color: #e0e0e0; }
 
         /* =========================================
-           全局动态效果：几何方框 + 波浪 + 滚动点阵
+           全局动态效果：悬浮风车 + 波浪 + 滚动点阵
            ========================================= */
 
-        /* 1. 全局悬浮几何框 */
+        /* 1. 全局悬浮装饰层 (容器) */
         .global-bg-shapes {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -215,20 +215,46 @@
             pointer-events: none; 
         }
 
-        .shape {
+        /* 新增：风车样式 */
+        .windmill {
             position: absolute;
-            border: 1px solid rgba(139, 90, 43, 0.15); 
+            width: 100px; height: 100px;
+            /* 居中定位，方便旋转 */
+            display: flex; justify-content: center; align-items: center;
         }
-        body.dark-mode .shape { border-color: rgba(255, 255, 255, 0.05); }
 
-        .s1 { width: 80px; height: 50px; top: 20%; left: 10%; animation: floatShape 25s infinite linear; }
-        .s2 { width: 120px; height: 70px; top: 60%; left: 85%; animation: floatShape 35s infinite linear reverse; }
-        .s3 { width: 60px; height: 60px; top: 80%; left: 15%; animation: floatShape 20s infinite linear; }
+        /* 新增：风车叶片样式 */
+        .blade {
+            position: absolute;
+            width: 14px; height: 50px;
+            background-color: rgba(139, 90, 43, 0.15); /* 半透明主题色填充 */
+            border: 1px solid rgba(139, 90, 43, 0.3);  /* 深一点的边框 */
+            border-radius: 50% 50% 10% 10%; /* 制作成叶片形状 */
+            top: 50%; left: 50%;
+            transform-origin: center bottom; /* 围绕底部中心旋转 */
+        }
+        
+        /* 深色模式下的叶片颜色 */
+        body.dark-mode .blade {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
 
-        @keyframes floatShape {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-50px) rotate(180deg); }
-            100% { transform: translateY(0) rotate(360deg); }
+        /* 放置四个叶片 */
+        .blade:nth-child(1) { transform: translate(-50%, -100%) rotate(0deg); }
+        .blade:nth-child(2) { transform: translate(-50%, -100%) rotate(90deg); }
+        .blade:nth-child(3) { transform: translate(-50%, -100%) rotate(180deg); }
+        .blade:nth-child(4) { transform: translate(-50%, -100%) rotate(270deg); }
+
+        /* 三个风车的位置和动画速度 */
+        .w1 { top: 15%; left: 10%; animation: spinWindmill 20s infinite linear; }
+        .w2 { top: 55%; left: 85%; animation: spinWindmill 28s infinite linear reverse; scale: 1.2; }
+        .w3 { top: 75%; left: 20%; animation: spinWindmill 24s infinite linear; scale: 0.8; }
+
+        /* 新增：风车旋转动画 */
+        @keyframes spinWindmill {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         /* 2. 底部超大平缓流体波浪 (强制全屏宽) */
@@ -276,21 +302,18 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* 3. 新增：底部反复滚动的点阵 (Halftone dots) */
+        /* 3. 底部反复滚动的点阵 (Halftone dots) */
         .rolling-dots {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 160px; /* 点阵区的高度 */
-            /* 用径向渐变画出波尔卡圆点 */
+            height: 160px; 
             background-image: radial-gradient(rgba(139, 90, 43, 0.15) 3.5px, transparent 4.5px);
-            background-size: 28px 28px; /* 点阵的间距 */
-            z-index: 1; /* 盖在下层波浪上 */
-            /* 魔法羽化：让点阵越往上越透明，自然融入背景 */
+            background-size: 28px 28px; 
+            z-index: 1; 
             -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 70%);
             mask-image: linear-gradient(to bottom, transparent 0%, black 70%);
-            /* 让背景图片位置水平移动，实现滚动效果 */
             animation: scrollDots 15s linear infinite;
             pointer-events: none;
         }
@@ -301,7 +324,7 @@
 
         @keyframes scrollDots {
             from { background-position-x: 0; }
-            to { background-position-x: -280px; } /* 移动距离必须是28px的倍数，确保无缝循环 */
+            to { background-position-x: -280px; } 
         }
 
         /* 4. 巨大的三行水印文字 */
@@ -316,7 +339,7 @@
             opacity: 0.08; 
             text-align: right; 
             line-height: 0.85; 
-            z-index: 2; /* 在波浪和点阵之上 */
+            z-index: 2; 
             pointer-events: none;
         }
         
@@ -328,15 +351,23 @@
             .wave-bg { bottom: -3850px; } 
             .wave-fg { bottom: -3870px; }
             .rolling-dots { height: 120px; }
+            /* 手机端稍微缩小风车 */
+            .windmill { scale: 0.7; }
         }
     </style>
 </head>
 <body>
 
     <div class="global-bg-shapes">
-        <div class="shape s1"></div>
-        <div class="shape s2"></div>
-        <div class="shape s3"></div>
+        <div class="windmill w1">
+            <div class="blade"></div><div class="blade"></div><div class="blade"></div><div class="blade"></div>
+        </div>
+        <div class="windmill w2">
+            <div class="blade"></div><div class="blade"></div><div class="blade"></div><div class="blade"></div>
+        </div>
+        <div class="windmill w3">
+            <div class="blade"></div><div class="blade"></div><div class="blade"></div><div class="blade"></div>
+        </div>
     </div>
 
     <button class="theme-toggle" id="theme-toggle" title="切换深色模式">🌙</button>
