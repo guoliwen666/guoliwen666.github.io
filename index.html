@@ -146,8 +146,49 @@
             color: #bbb;
             margin-top: 50px;
         }
+/* --- 新增：水波渐现入场动画 --- */
+        
+        /* 1. 定义动画动作：从透明到不透明，从下方 30px 处升到原位 */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-        /* --- 深色模式核心样式 --- */
+        /* 2. 让容器里的所有大块（header, card, footer）都准备好这个动画 */
+        .container > header,
+        .container > .card,
+        .container > footer {
+            opacity: 0; /* 初始状态隐藏 */
+            /* cubic-bezier 让动画有种“丝滑的阻尼感”，而不是傻快 */
+            animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; 
+        }
+
+        /* 3. 核心：设置阶梯式的延迟时间 (Staggered Delay)，制造水波感 */
+        .container > header {
+            animation-delay: 0.1s;
+        }
+        
+        .container > .card:nth-of-type(1) { /* 第一张卡片 (About Me) */
+            animation-delay: 0.25s;
+        }
+        
+        .container > .card:nth-of-type(2) { /* 第二张卡片 (Notes & Works) */
+            animation-delay: 0.4s;
+        }
+        
+        .container > .card:nth-of-type(3) { /* 第三张卡片 (Contact) */
+            animation-delay: 0.55s;
+        }
+        
+        .container > footer {
+            animation-delay: 0.7s;
+        }        /* --- 深色模式核心样式 --- */
         .theme-toggle {
             position: fixed;
             top: 20px;
