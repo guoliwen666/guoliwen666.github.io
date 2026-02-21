@@ -19,6 +19,10 @@
 
         body {
             background-color: var(--bg-color);
+            /* --- 全局细腻的圆点网格纹理 --- */
+            background-image: radial-gradient(rgba(139, 90, 43, 0.08) 1px, transparent 1px);
+            background-size: 20px 20px; 
+            
             color: var(--text-main);
             font-family: var(--font-serif);
             margin: 0;
@@ -139,114 +143,26 @@
                 padding: 20px;
             }
         }
-        
-        footer {
-            text-align: center;
-            font-size: 0.8rem;
-            color: #bbb;
-            margin-top: 50px;
-        }
-/* --- 新增：水波渐现入场动画 --- */
-        
-        /* 1. 定义动画动作：从透明到不透明，从下方 30px 处升到原位 */
+
+        /* --- 水波渐现入场动画 --- */
         @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 2. 让容器里的所有大块（header, card, footer）都准备好这个动画 */
         .container > header,
         .container > .card,
         .container > footer {
-            opacity: 0; /* 初始状态隐藏 */
-            /* cubic-bezier 让动画有种“丝滑的阻尼感”，而不是傻快 */
+            opacity: 0; 
             animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; 
         }
 
-        /* 3. 核心：设置阶梯式的延迟时间 (Staggered Delay)，制造水波感 */
-        .container > header {
-            animation-delay: 0.1s;
-        }
-        
-        .container > .card:nth-of-type(1) { /* 第一张卡片 (About Me) */
-            animation-delay: 0.25s;
-        }
-        
-        .container > .card:nth-of-type(2) { /* 第二张卡片 (Notes & Works) */
-            animation-delay: 0.4s;
-        }
-        
-        .container > .card:nth-of-type(3) { /* 第三张卡片 (Contact) */
-            animation-delay: 0.55s;
-        }
-        
-        .container > footer {
-            animation-delay: 0.7s;
-        }
-        /* --- 新增：页脚动态背景样式 --- */
+        .container > header { animation-delay: 0.1s; }
+        .container > .card:nth-of-type(1) { animation-delay: 0.25s; }
+        .container > .card:nth-of-type(2) { animation-delay: 0.4s; }
+        .container > .card:nth-of-type(3) { animation-delay: 0.55s; }
+        .container > footer { animation-delay: 0.7s; }
 
-        footer {
-            text-align: center;
-            font-size: 0.8rem;
-            color: #bbb;
-            margin-top: 80px; /* 增加顶部间距，让背景展示出来 */
-            padding-top: 100px; /* 增加内部内边距 */
-            padding-bottom: 40px;
-            /* 核心1：绘制米色沙丘渐变背景 */
-            /* 从透明过渡到深米色，模拟地平线效果 */
-            background: linear-gradient(to bottom, rgba(249, 247, 241, 0) 0%, #f0e5d8 60%, #e8dbc8 100%);
-        }
-
-        /* 巨大的背景文字样式 */
-        .footer-bg-text {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 200%; /* 让宽度足够大，方便左右移动 */
-            font-size: 8rem; /* 超大字号 */
-            font-weight: bold;
-            font-family: "Times New Roman", serif; /* 使用衬线体更有味道 */
-            color: var(--accent-color); /* 使用你的主题棕褐色 */
-            opacity: 0.06; /* 极低的透明度，若隐若现 */
-            white-space: nowrap; /* 防止文字换行 */
-            z-index: 0; /* 放在最底层 */
-            /* 核心2：应用缓慢漂移动画 */
-            /* 120秒完成一次循环，无限循环，线性匀速 */
-            animation: driftText 120s linear infinite; 
-        }
-
-        /* 定义漂移动画关键帧 */
-        @keyframes driftText {
-            from {
-                transform: translateX(0); /* 从原点开始 */
-            }
-            to {
-                /* 向左平移 50% 的距离 (因为宽度是200%，所以刚好移到一半) */
-                transform: translateX(-50%); 
-            }
-        }
-
-        /* --- 深色模式适配 --- */
-        /* 让深色模式下的页脚背景变成深色渐变，文字变暗 */
-        body.dark-mode footer {
-            background: linear-gradient(to bottom, rgba(26, 26, 26, 0) 0%, #242424 60%, #1a1a1a 100%);
-        }
-        body.dark-mode .footer-bg-text {
-            color: #ffffff;
-            opacity: 0.03;
-        }
-
-        /* 手机端适配：减小字号 */
-        @media (max-width: 600px) {
-            .footer-bg-text { font-size: 4rem; }
-            footer { padding-top: 60px; }
-        }
         /* --- 深色模式核心样式 --- */
         .theme-toggle {
             position: fixed;
@@ -277,24 +193,117 @@
             --card-bg: #242424;        
             --text-main: #d4d4d4;      
             --text-light: #888;        
-            --accent-color: #d4a373;   
+            --accent-color: #d4a373;  
+            /* 深色模式下的网格纹理 */ 
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
         }
 
-        body.dark-mode .theme-toggle {
-            border-color: #333;
+        body.dark-mode .theme-toggle { border-color: #333; }
+        body.dark-mode h2 { border-bottom-color: #333; }
+        body.dark-mode .note-item { background: #1e1e1e; }
+        body.dark-mode h1 { color: #e0e0e0; }
+
+        /* =========================================
+           全局动态效果：悬浮几何框 + 流体波浪
+           ========================================= */
+
+        /* 1. 全局悬浮几何框 */
+        .global-bg-shapes {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1; 
+            pointer-events: none; 
         }
-        body.dark-mode h2 {
-            border-bottom-color: #333;
+
+        .shape {
+            position: absolute;
+            border: 1px solid rgba(139, 90, 43, 0.15); 
         }
-        body.dark-mode .note-item {
-            background: #1e1e1e;       
+        body.dark-mode .shape { border-color: rgba(255, 255, 255, 0.05); }
+
+        .s1 { width: 80px; height: 50px; top: 20%; left: 10%; animation: floatShape 25s infinite linear; }
+        .s2 { width: 120px; height: 70px; top: 60%; left: 85%; animation: floatShape 35s infinite linear reverse; }
+        .s3 { width: 60px; height: 60px; top: 80%; left: 15%; animation: floatShape 20s infinite linear; }
+
+        @keyframes floatShape {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-50px) rotate(180deg); }
+            100% { transform: translateY(0) rotate(360deg); }
         }
-        body.dark-mode h1 {
-            color: #e0e0e0;
+
+        /* 2. 底部流体波浪 */
+        footer {
+            position: relative;
+            overflow: hidden; /* 裁剪多余的波浪圆弧 */
+            text-align: center;
+            font-size: 0.8rem;
+            color: #bbb;
+            margin-top: 50px;
+            padding-top: 150px; /* 给波浪流出高度 */
+            padding-bottom: 40px;
+            border-radius: 16px; /* 让底部有圆角，更贴合卡片风格 */
+        }
+
+        .wave {
+            position: absolute;
+            left: 50%;
+            width: 1200px;  /* 固定的巨大尺寸，防止页面被撑破 */
+            height: 1200px;
+            border-radius: 40%; /* 变成不规则的圆润海浪 */
+            transform-origin: 50% 50%;
+        }
+
+        .wave-bg {
+            bottom: -1150px; /* 只露出最上面的弧度 */
+            background-color: rgba(212, 163, 115, 0.08); 
+            animation: spinWave 25s infinite linear;
+            z-index: 0;
+        }
+
+        .wave-fg {
+            bottom: -1160px;
+            background-color: rgba(212, 163, 115, 0.12);
+            animation: spinWave 35s infinite linear;
+            z-index: 1;
+        }
+
+        body.dark-mode .wave-bg { background-color: rgba(255, 255, 255, 0.02); }
+        body.dark-mode .wave-fg { background-color: rgba(255, 255, 255, 0.04); }
+
+        @keyframes spinWave {
+            0% { transform: translateX(-50%) rotate(0deg); }
+            100% { transform: translateX(-50%) rotate(360deg); }
+        }
+
+        /* 3. 巨大的水印文字 */
+        .footer-bg-text {
+            position: absolute;
+            bottom: 20px;
+            right: 0;
+            font-size: 6rem;
+            font-weight: bold;
+            font-family: "Georgia", "Times New Roman", serif;
+            color: var(--accent-color);
+            opacity: 0.06;
+            white-space: nowrap;
+            z-index: 2;
+            pointer-events: none;
+            line-height: 0.9;
+        }
+        body.dark-mode .footer-bg-text { color: #ffffff; opacity: 0.03; }
+
+        @media (max-width: 600px) {
+            .footer-bg-text { font-size: 4rem; opacity: 0.04;}
         }
     </style>
 </head>
 <body>
+
+    <div class="global-bg-shapes">
+        <div class="shape s1"></div>
+        <div class="shape s2"></div>
+        <div class="shape s3"></div>
+    </div>
 
     <button class="theme-toggle" id="theme-toggle" title="切换深色模式">🌙</button>
 
@@ -351,24 +360,26 @@
             </p>
         </div>
 
- <footer style="position: relative; overflow: hidden;">
-        
-        <div class="footer-bg-text">THE RISING SEA</div>
-        
-        <div style="position: relative; z-index: 2;">
-            <div>&copy; 2026 Guo Liwen. </div>
+        <footer>
+            <div class="wave wave-bg"></div>
+            <div class="wave wave-fg"></div>
             
-            <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-light);">
-                <span id="busuanzi_container_site_pv" style="display:none">
-                    本站总访问量：<span id="busuanzi_value_site_pv"></span> 次
-                </span>
-                &nbsp;|&nbsp; 
-                <span id="busuanzi_container_site_uv" style="display:none">
-                    访客数：<span id="busuanzi_value_site_uv"></span> 人
-                </span>
+            <div class="footer-bg-text">THE RISING SEA</div>
+            
+            <div style="position: relative; z-index: 2;">
+                <div>&copy; 2026 Guo Liwen. </div>
+                
+                <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-light);">
+                    <span id="busuanzi_container_site_pv" style="display:none">
+                        本站总访问量：<span id="busuanzi_value_site_pv"></span> 次
+                    </span>
+                    &nbsp;|&nbsp; 
+                    <span id="busuanzi_container_site_uv" style="display:none">
+                        访客数：<span id="busuanzi_value_site_uv"></span> 人
+                    </span>
+                </div>
             </div>
-        </div>
-    </footer>
+        </footer>
 
     </div>
 
@@ -393,6 +404,8 @@
             }
         });
     </script>
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 </body>
 </html>
