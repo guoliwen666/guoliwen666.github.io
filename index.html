@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guo Liwen | Mathematics</title>
-    <link rel="shortcut icon" href="https://guoliwen666.github.io/logo1.jpg?v=final">
+    <link rel="shortcut icon" href="[https://guoliwen666.github.io/logo1.jpg?v=final](https://guoliwen666.github.io/logo1.jpg?v=final)">
 
     <style>
         :root {
@@ -24,10 +24,12 @@
             margin: 0;
             padding: 20px;
             line-height: 1.8;
+            /* 全局平滑过渡动画 */
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
 
         .container {
-            max-width: 700px; /* 稍微窄一点，更有书籍感 */
+            max-width: 700px;
             margin: 0 auto;
         }
 
@@ -53,6 +55,7 @@
             margin: 10px 0;
             font-weight: normal;
             color: #2c2c2c;
+            transition: color 0.4s ease;
         }
 
         .subtitle {
@@ -68,11 +71,10 @@
             border-radius: 16px;
             padding: 30px;
             margin-bottom: 25px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.03); /* 非常柔和的阴影 */
-            transition: transform 0.2s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            transition: transform 0.2s ease, background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
         }
 
-        /* 鼠标悬停卡片上浮一点点 */
         .card:hover {
             transform: translateY(-2px);
         }
@@ -88,7 +90,6 @@
             align-items: center;
         }
         
-        /* 标题前加个小图标装饰 */
         h2::before {
             content: "¶";
             margin-right: 10px;
@@ -96,17 +97,16 @@
             opacity: 0.5;
         }
 
-        /* 链接样式 */
         a {
             color: var(--accent-color);
             text-decoration: none;
             border-bottom: 1px dotted var(--accent-color);
+            transition: color 0.4s ease;
         }
         a:hover {
             border-bottom-style: solid;
         }
 
-        /* 笔记网格布局 */
         .notes-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -114,10 +114,11 @@
         }
 
         .note-item {
-            background: #fafafa; /* 笔记小卡片底色稍微灰一点 */
+            background: #fafafa;
             padding: 15px;
             border-radius: 10px;
             text-align: center;
+            transition: background-color 0.4s ease;
         }
         
         .note-title {
@@ -133,191 +134,7 @@
             display: block;
         }
 
-        /* 公式卡片样式 */
-        .formula-box {
-            text-align: center;
-            padding: 10px;
-            margin: 15px 0;
-            background: #fdfdfd;
-            border: 1px dashed #eee;
-            border-radius: 8px;
-        }
-        
-        .formula-name {
-            font-size: 0.9rem;
-            color: #666;
-            margin-bottom: 10px;
-        }
-
         /* 手机端适配 */
         @media (max-width: 600px) {
             .notes-grid {
-                grid-template-columns: 1fr; /* 手机变单列 */
-            }
-            .card {
-                padding: 20px; /* 手机上内边距小一点 */
-            }
-        }
-        
-        footer {
-            text-align: center;
-            font-size: 0.8rem;
-            color: #bbb;
-            margin-top: 50px;
-        }
-    </style>
-</head>
-<body>
-    <button class="theme-toggle" id="theme-toggle" title="切换深色模式">🌙</button>
-
-    <div class="container">
-        ```
-
----
-
-### 第二步：添加“深色滤镜”和“过渡动画” (CSS)
-
-我们要定义一套“黑夜配色”，并给网页加上平滑的颜色切换动画。
-
-找到 `<style>` 标签，拉到最下面（在 `</style>` 之前），把下面这段 CSS 代码粘贴进去：
-
-```css
-        /* --- 新增：深色模式核心样式 --- */
-        
-        /* 1. 全局平滑过渡动画 */
-        body, .card, .note-item, a, .theme-toggle {
-            transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
-        }
-
-        /* 2. 悬浮按钮样式 */
-        .theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--card-bg);
-            border: 1px solid #eee;
-            color: var(--text-main);
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            z-index: 1000;
-        }
-
-        .theme-toggle:hover {
-            transform: scale(1.1);
-        }
-
-        /* 3. 深色模式下的变量替换 (当 body 被打上 dark-mode 标签时生效) */
-        body.dark-mode {
-            --bg-color: #1a1a1a;       /* 深炭灰背景 */
-            --card-bg: #242424;        /* 卡片稍微亮一点的深灰 */
-            --text-main: #d4d4d4;      /* 柔和的灰白色字体 */
-            --text-light: #888;        /* 次要文字变暗 */
-            --accent-color: #d4a373;   /* 强调色变成温暖的琥珀/浅棕色，在黑底上更好看 */
-        }
-
-        /* 4. 针对深色模式的一些细节修正 */
-        body.dark-mode .theme-toggle {
-            border-color: #333;
-        }
-        body.dark-mode h2 {
-            border-bottom-color: #333; /* 标题下划线变暗 */
-        }
-        body.dark-mode .note-item {
-            background: #1e1e1e;       /* 笔记小方块的底色 */
-        }
-        body.dark-mode .formula-box {
-            background: #1e1e1e;
-            border-color: #333;
-        }<div class="container">
-    
-    <header>
-        <img src="logo3.jpg" alt="Guo Liwen" class="avatar">
-        <h1>livi</h1>
-        <div class="subtitle">梦想成为代数糕薯 | Math Major</div>
-    </header>
-
-    <div class="card">
-        <h2>About Me</h2>
-        <p>
-            这里算作我个人的一个小屋，装着一些感悟与数学上的痕迹
-        </p>
-        <p>
-            Line, from origin. 
-        </p>
-    </div>
-    <div class="card">
-        <h2>Notes & Works</h2>
-        <div class="notes-grid">
-            
-          <div class="note-item">
-    <span class="note-title">Analysis</span>
-    <span class="note-desc">Real Analysis & More</span>
-    <a href="analysis.html">View List →</a>
-</div>
-
-          <div class="note-item">
-    <span class="note-title">Algebra</span>
-    <span class="note-desc">Groups, Rings & Thesis</span>
-    <a href="algebra.html">View List →</a>
-</div>
-
-<div class="note-item">
-    <span class="note-title">Beamer Slide</span>
-    <span class="note-desc">Presentation & Talks</span>
-    <a href="beamer.html">View List →</a>
-</div>
-<div class="note-item">
-                <span class="note-title">Misc & Thoughts</span>
-                <span class="note-desc">Essays, Reading & Life</span>
-                <a href="misc.html">View List →</a>
-            </div>
-            
-        </div> 
-    <div class="card">
-        <h2>Contact</h2>
-        <p style="text-align: center;">
-            <strong>公众号:</strong> liviovo <br>
-            <strong>QQ:</strong> 3266237478
-        </p>
-    </div>
-    <footer>
-        &copy; 2026 Guo Liwen. 
-    </footer>
-
-</div>
-<script>
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const body = document.body;
-        
-        // 1. 打开网页时，检查之前是否选择了深色模式
-        const currentTheme = localStorage.getItem('theme');
-        if (currentTheme === 'dark') {
-            body.classList.add('dark-mode');
-            themeToggleBtn.innerText = '☀️'; // 变成太阳图标
-        }
-
-        // 2. 点击按钮时的切换逻辑
-        themeToggleBtn.addEventListener('click', () => {
-            // 给 body 加上或去掉 dark-mode 标签
-            body.classList.toggle('dark-mode');
-            
-            // 3. 改变图标并把状态保存到浏览器的记忆中
-            if (body.classList.contains('dark-mode')) {
-                themeToggleBtn.innerText = '☀️';
-                localStorage.setItem('theme', 'dark');
-            } else {
-                themeToggleBtn.innerText = '🌙';
-                localStorage.setItem('theme', 'light');
-            }
-        });
-    </script>
-</html>
-</body>
-</html>
+                grid-template
