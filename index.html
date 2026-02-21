@@ -19,7 +19,7 @@
 
         body {
             background-color: var(--bg-color);
-            /* --- 全局细腻的圆点网格纹理 --- */
+            /* 全局细腻的圆点网格纹理 */
             background-image: radial-gradient(rgba(139, 90, 43, 0.08) 1px, transparent 1px);
             background-size: 20px 20px; 
             
@@ -29,11 +29,13 @@
             padding: 20px;
             line-height: 1.8;
             transition: background-color 0.4s ease, color 0.4s ease;
+            overflow-x: hidden; /* 防止云朵飘出屏幕产生横向滚动条 */
         }
 
         .container {
             max-width: 700px;
             margin: 0 auto;
+            position: relative; z-index: 10; /* 确保内容在背景之上 */
         }
 
         header {
@@ -180,7 +182,7 @@
             justify-content: center;
             font-size: 1.2rem;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            z-index: 1000;
+            z-index: 1001; /* 确保按钮在最上层 */
             transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease, transform 0.2s;
         }
 
@@ -204,10 +206,10 @@
         body.dark-mode h1 { color: #e0e0e0; }
 
         /* =========================================
-           全局动态效果：悬浮风车 + 波浪 + 滚动点阵
+           全局动态生态系统：风车 + 云朵 + 花草 + 波浪 + 点阵
            ========================================= */
 
-        /* 1. 全局悬浮装饰层 (容器) */
+        /* --- 1. 全局悬浮装饰层 (容器) --- */
         .global-bg-shapes {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -215,49 +217,68 @@
             pointer-events: none; 
         }
 
-        /* 新增：风车样式 */
+        /* --- 风车样式 --- */
         .windmill {
             position: absolute;
             width: 100px; height: 100px;
-            /* 居中定位，方便旋转 */
             display: flex; justify-content: center; align-items: center;
+            opacity: 0.6;
         }
-
-        /* 新增：风车叶片样式 */
         .blade {
             position: absolute;
             width: 14px; height: 50px;
-            background-color: rgba(139, 90, 43, 0.15); /* 半透明主题色填充 */
-            border: 1px solid rgba(139, 90, 43, 0.3);  /* 深一点的边框 */
-            border-radius: 50% 50% 10% 10%; /* 制作成叶片形状 */
+            background-color: rgba(139, 90, 43, 0.15); 
+            border: 1px solid rgba(139, 90, 43, 0.3);  
+            border-radius: 50% 50% 10% 10%; 
             top: 50%; left: 50%;
-            transform-origin: center bottom; /* 围绕底部中心旋转 */
+            transform-origin: center bottom; 
         }
-        
-        /* 深色模式下的叶片颜色 */
         body.dark-mode .blade {
             background-color: rgba(255, 255, 255, 0.08);
             border-color: rgba(255, 255, 255, 0.2);
         }
-
-        /* 放置四个叶片 */
         .blade:nth-child(1) { transform: translate(-50%, -100%) rotate(0deg); }
         .blade:nth-child(2) { transform: translate(-50%, -100%) rotate(90deg); }
         .blade:nth-child(3) { transform: translate(-50%, -100%) rotate(180deg); }
         .blade:nth-child(4) { transform: translate(-50%, -100%) rotate(270deg); }
 
-        /* 三个风车的位置和动画速度 */
-        .w1 { top: 15%; left: 10%; animation: spinWindmill 20s infinite linear; }
-        .w2 { top: 55%; left: 85%; animation: spinWindmill 28s infinite linear reverse; scale: 1.2; }
-        .w3 { top: 75%; left: 20%; animation: spinWindmill 24s infinite linear; scale: 0.8; }
+        /* 风车位置与动画 */
+        .w1 { top: 15%; left: 8%; animation: spinWindmill 20s infinite linear; }
+        .w2 { top: 55%; left: 88%; animation: spinWindmill 28s infinite linear reverse; scale: 1.2; }
+        .w3 { top: 75%; left: 18%; animation: spinWindmill 24s infinite linear; scale: 0.8; }
+        .w4 { top: 30%; left: 75%; animation: spinWindmill 22s infinite linear reverse; scale: 0.9; opacity: 0.4; }
+        .w5 { top: 10%; left: 50%; animation: spinWindmill 30s infinite linear; scale: 0.6; opacity: 0.3; }
+        .w6 { top: 85%; left: 70%; animation: spinWindmill 26s infinite linear reverse; scale: 1.1; }
 
-        /* 新增：风车旋转动画 */
         @keyframes spinWindmill {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
 
-        /* 2. 底部超大平缓流体波浪 (强制全屏宽) */
+        /* --- 新增：漂浮的白云 --- */
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 100px; /* 胶囊形状 */
+            filter: blur(8px); /* 柔化边缘 */
+            animation: floatCloud linear infinite;
+            opacity: 0.7;
+        }
+        body.dark-mode .cloud {
+            background: rgba(255, 255, 255, 0.08); /* 深色模式下云朵变暗 */
+            filter: blur(15px);
+        }
+
+        .c1 { width: 120px; height: 40px; top: 10%; left: -150px; animation-duration: 60s; }
+        .c2 { width: 180px; height: 55px; top: 25%; left: -200px; animation-duration: 85s; animation-delay: 5s; }
+        .c3 { width: 90px;  height: 30px; top: 5%;  left: -100px; animation-duration: 45s; animation-delay: 15s;}
+
+        @keyframes floatCloud {
+            from { transform: translateX(0); }
+            to { transform: translateX(120vw); } /* 飘过整个屏幕 */
+        }
+
+        /* --- 2. 底部生态页脚 (波浪+植物+点阵) --- */
         footer {
             position: relative;
             overflow: hidden; 
@@ -270,6 +291,46 @@
             border-radius: 0; 
         }
 
+        /* 新增：地平线处的抽象花草容器 */
+        .vegetation {
+            position: absolute;
+            top: 218px; /* 放置在地平线位置 */
+            left: 0;
+            width: 100%;
+            height: 50px;
+            z-index: 2;
+            display: flex;
+            justify-content: space-around;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+        body.dark-mode .vegetation { opacity: 0.2; }
+
+        /* 抽象植物造型 */
+        .plant {
+            position: relative;
+            width: 2px;
+            background: var(--accent-color);
+            transform-origin: bottom center;
+            animation: swayPlant 4s ease-in-out infinite alternate;
+        }
+        /* 草 */
+        .grass { height: 25px; }
+        /* 花朵 (用伪元素画圆头) */
+        .flower { height: 40px; }
+        .flower::after {
+            content: ''; position: absolute; top: -6px; left: -3px;
+            width: 8px; height: 8px; border-radius: 50%;
+            background: var(--accent-color);
+        }
+        
+        /* 植物摇摆动画 */
+        @keyframes swayPlant {
+            from { transform: rotate(-5deg); }
+            to { transform: rotate(5deg); }
+        }
+
+        /* 波浪样式 */
         .wave {
             position: absolute;
             left: 50%;
@@ -279,21 +340,18 @@
             border-radius: 43%;   
             transform-origin: 50% 50%;
         }
-
         .wave-bg {
             bottom: -3750px; 
             background-color: rgba(212, 163, 115, 0.08); 
             animation: spinWave 45s infinite linear;
             z-index: 0;
         }
-
         .wave-fg {
             bottom: -3780px; 
             background-color: rgba(212, 163, 115, 0.12);
             animation: spinWave 60s infinite linear;
             z-index: 1;
         }
-
         body.dark-mode .wave-bg { background-color: rgba(255, 255, 255, 0.02); }
         body.dark-mode .wave-fg { background-color: rgba(255, 255, 255, 0.04); }
 
@@ -302,13 +360,10 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* 3. 底部反复滚动的点阵 (Halftone dots) */
+        /* 滚动点阵样式 */
         .rolling-dots {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 160px; 
+            bottom: 0; left: 0; width: 100%; height: 160px; 
             background-image: radial-gradient(rgba(139, 90, 43, 0.15) 3.5px, transparent 4.5px);
             background-size: 28px 28px; 
             z-index: 1; 
@@ -317,41 +372,32 @@
             animation: scrollDots 15s linear infinite;
             pointer-events: none;
         }
-        
         body.dark-mode .rolling-dots {
             background-image: radial-gradient(rgba(255, 255, 255, 0.08) 3.5px, transparent 4.5px);
         }
-
         @keyframes scrollDots {
             from { background-position-x: 0; }
             to { background-position-x: -280px; } 
         }
 
-        /* 4. 巨大的三行水印文字 */
+        /* 水印文字 */
         .footer-bg-text {
-            position: absolute;
-            bottom: -10px;  
-            right: 40px;    
-            font-size: 6.5rem; 
-            font-weight: bold;
+            position: absolute; bottom: -10px; right: 40px;    
+            font-size: 6.5rem; font-weight: bold;
             font-family: "Georgia", "Times New Roman", serif;
-            color: var(--accent-color);
-            opacity: 0.08; 
-            text-align: right; 
-            line-height: 0.85; 
-            z-index: 2; 
-            pointer-events: none;
+            color: var(--accent-color); opacity: 0.08; 
+            text-align: right; line-height: 0.85; 
+            z-index: 2; pointer-events: none;
         }
-        
         body.dark-mode .footer-bg-text { color: #ffffff; opacity: 0.03; }
 
         @media (max-width: 600px) {
             footer { padding-top: 150px; }
+            .vegetation { top: 148px; } /* 手机端调整植物位置 */
             .footer-bg-text { font-size: 4rem; right: 15px; }
             .wave-bg { bottom: -3850px; } 
             .wave-fg { bottom: -3870px; }
             .rolling-dots { height: 120px; }
-            /* 手机端稍微缩小风车 */
             .windmill { scale: 0.7; }
         }
     </style>
@@ -359,15 +405,16 @@
 <body>
 
     <div class="global-bg-shapes">
-        <div class="windmill w1">
-            <div class="blade"></div><div class="blade"></div><div class="blade"></div><div class="blade"></div>
-        </div>
-        <div class="windmill w2">
-            <div class="blade"></div><div class="blade"></div><div class="blade"></div><div class="blade"></div>
-        </div>
-        <div class="windmill w3">
-            <div class="blade"></div><div class="blade"></div><div class="blade"></div><div class="blade"></div>
-        </div>
+        <div class="cloud c1"></div>
+        <div class="cloud c2"></div>
+        <div class="cloud c3"></div>
+
+        <div class="windmill w1"><div class="blade"></div><div class="blade"></div><div class="blade"></div><div class="blade"></div></div>
+        <div class="windmill w2"><div class="blade"></div><div class="blade"></div><div class="blade"></div><div class="blade"></div></div>
+        <div class="windmill w3"><div class="blade"></div><div class="blade"></div><div class="blade"></div><div class="blade"></div></div>
+        <div class="windmill w4"><div class="blade"></div><div class="blade"></div><div class="blade"></div><div class="blade"></div></div>
+        <div class="windmill w5"><div class="blade"></div><div class="blade"></div><div class="blade"></div><div class="blade"></div></div>
+        <div class="windmill w6"><div class="blade"></div><div class="blade"></div><div class="blade"></div><div class="blade"></div></div>
     </div>
 
     <button class="theme-toggle" id="theme-toggle" title="切换深色模式">🌙</button>
@@ -428,6 +475,16 @@
     </div>
 
     <footer>
+        <div class="vegetation">
+            <div class="plant grass" style="animation-delay: 0s;"></div>
+            <div class="plant flower" style="animation-delay: 1s;"></div>
+            <div class="plant grass" style="animation-delay: 0.5s; scale: 0.8;"></div>
+            <div class="plant grass" style="animation-delay: 2s;"></div>
+            <div class="plant flower" style="animation-delay: 1.5s; scale: 1.1;"></div>
+            <div class="plant grass" style="animation-delay: 3s; scale: 0.9;"></div>
+            <div class="plant grass" style="animation-delay: 0.2s;"></div>
+        </div>
+
         <div class="wave wave-bg"></div>
         <div class="wave wave-fg"></div>
         
