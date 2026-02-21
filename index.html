@@ -204,7 +204,7 @@
         body.dark-mode h1 { color: #e0e0e0; }
 
         /* =========================================
-           全局动态效果：悬浮几何框 + 流体波浪
+           全局动态效果：几何方框 + 波浪 + 滚动点阵
            ========================================= */
 
         /* 1. 全局悬浮几何框 */
@@ -238,11 +238,10 @@
             text-align: center;
             font-size: 0.8rem;
             color: #bbb;
-            /* 核心修改：用负边距突破 body 的 padding，让页脚强制抵达屏幕边缘 */
             margin: 50px -20px -20px -20px; 
             padding-top: 220px; 
             padding-bottom: 50px;
-            border-radius: 0; /* 取消圆角，变成真正的满屏底边 */
+            border-radius: 0; 
         }
 
         .wave {
@@ -277,7 +276,35 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* 3. 巨大的三行水印文字 */
+        /* 3. 新增：底部反复滚动的点阵 (Halftone dots) */
+        .rolling-dots {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 160px; /* 点阵区的高度 */
+            /* 用径向渐变画出波尔卡圆点 */
+            background-image: radial-gradient(rgba(139, 90, 43, 0.15) 3.5px, transparent 4.5px);
+            background-size: 28px 28px; /* 点阵的间距 */
+            z-index: 1; /* 盖在下层波浪上 */
+            /* 魔法羽化：让点阵越往上越透明，自然融入背景 */
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 70%);
+            mask-image: linear-gradient(to bottom, transparent 0%, black 70%);
+            /* 让背景图片位置水平移动，实现滚动效果 */
+            animation: scrollDots 15s linear infinite;
+            pointer-events: none;
+        }
+        
+        body.dark-mode .rolling-dots {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.08) 3.5px, transparent 4.5px);
+        }
+
+        @keyframes scrollDots {
+            from { background-position-x: 0; }
+            to { background-position-x: -280px; } /* 移动距离必须是28px的倍数，确保无缝循环 */
+        }
+
+        /* 4. 巨大的三行水印文字 */
         .footer-bg-text {
             position: absolute;
             bottom: -10px;  
@@ -289,7 +316,7 @@
             opacity: 0.08; 
             text-align: right; 
             line-height: 0.85; 
-            z-index: 0; 
+            z-index: 2; /* 在波浪和点阵之上 */
             pointer-events: none;
         }
         
@@ -300,6 +327,7 @@
             .footer-bg-text { font-size: 4rem; right: 15px; }
             .wave-bg { bottom: -3850px; } 
             .wave-fg { bottom: -3870px; }
+            .rolling-dots { height: 120px; }
         }
     </style>
 </head>
@@ -366,13 +394,17 @@
             </p>
         </div>
         
-    </div> <footer>
+    </div>
+
+    <footer>
         <div class="wave wave-bg"></div>
         <div class="wave wave-fg"></div>
         
+        <div class="rolling-dots"></div>
+        
         <div class="footer-bg-text">THE<br>RISING<br>SEA</div>
         
-        <div style="position: relative; z-index: 2;">
+        <div style="position: relative; z-index: 3;">
             <div>&copy; 2026 Guo Liwen. Theme inspired by Thread478.</div>
         </div>
     </footer>
