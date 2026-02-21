@@ -152,7 +152,7 @@
 
         .container > header,
         .container > .card,
-        .container > footer {
+        footer {
             opacity: 0; 
             animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; 
         }
@@ -161,7 +161,7 @@
         .container > .card:nth-of-type(1) { animation-delay: 0.25s; }
         .container > .card:nth-of-type(2) { animation-delay: 0.4s; }
         .container > .card:nth-of-type(3) { animation-delay: 0.55s; }
-        .container > footer { animation-delay: 0.7s; }
+        footer { animation-delay: 0.7s; }
 
         /* --- 深色模式核心样式 --- */
         .theme-toggle {
@@ -231,39 +231,39 @@
             100% { transform: translateY(0) rotate(360deg); }
         }
 
-        /* 2. 底部超大平缓流体波浪 */
+        /* 2. 底部超大平缓流体波浪 (强制全屏宽) */
         footer {
             position: relative;
             overflow: hidden; 
             text-align: center;
             font-size: 0.8rem;
             color: #bbb;
-            margin-top: 50px;
-            padding-top: 220px; /* 顶出足够高的空间，让波浪有地方翻滚 */
+            /* 核心修改：用负边距突破 body 的 padding，让页脚强制抵达屏幕边缘 */
+            margin: 50px -20px -20px -20px; 
+            padding-top: 220px; 
             padding-bottom: 50px;
-            border-radius: 16px; 
+            border-radius: 0; /* 取消圆角，变成真正的满屏底边 */
         }
 
         .wave {
             position: absolute;
             left: 50%;
-            /* 核心：把波浪放大到 4000px，弧度才会极其平缓、横跨全屏 */
             width: 4000px;  
             height: 4000px;
-            margin-left: -2000px; /* 让巨大的圆完美居中 */
+            margin-left: -2000px; 
             border-radius: 43%;   
             transform-origin: 50% 50%;
         }
 
         .wave-bg {
-            bottom: -3750px; /* 露出 250px 的海面 */
+            bottom: -3750px; 
             background-color: rgba(212, 163, 115, 0.08); 
             animation: spinWave 45s infinite linear;
             z-index: 0;
         }
 
         .wave-fg {
-            bottom: -3780px; /* 露出 220px 的海面 */
+            bottom: -3780px; 
             background-color: rgba(212, 163, 115, 0.12);
             animation: spinWave 60s infinite linear;
             z-index: 1;
@@ -280,22 +280,21 @@
         /* 3. 巨大的三行水印文字 */
         .footer-bg-text {
             position: absolute;
-            bottom: -10px;  /* 稍微沉到底部边缘 */
-            right: 40px;    /* 靠右对齐 */
-            font-size: 6.5rem; /* 超大字号 */
+            bottom: -10px;  
+            right: 40px;    
+            font-size: 6.5rem; 
             font-weight: bold;
             font-family: "Georgia", "Times New Roman", serif;
             color: var(--accent-color);
             opacity: 0.08; 
-            text-align: right; /* 文字向右对齐 */
-            line-height: 0.85; /* 让三行文字紧凑一点 */
-            z-index: 0; /* 放在波浪后面，制造出在水中的感觉 */
+            text-align: right; 
+            line-height: 0.85; 
+            z-index: 0; 
             pointer-events: none;
         }
         
         body.dark-mode .footer-bg-text { color: #ffffff; opacity: 0.03; }
 
-        /* 手机端专门适配，防止字太大或者波浪太高 */
         @media (max-width: 600px) {
             footer { padding-top: 150px; }
             .footer-bg-text { font-size: 4rem; right: 15px; }
@@ -366,18 +365,17 @@
                 <strong>QQ:</strong> 3266237478
             </p>
         </div>
-
-        <footer>
-            <div class="wave wave-bg"></div>
-            <div class="wave wave-fg"></div>
-            
-            <div class="footer-bg-text">THE<br>RISING<br>SEA</div>
-            
-            <div style="position: relative; z-index: 2;">
-                <div>&copy; 2026 Guo Liwen. </div>
-        </footer>
-
-    </div>
+        
+    </div> <footer>
+        <div class="wave wave-bg"></div>
+        <div class="wave wave-fg"></div>
+        
+        <div class="footer-bg-text">THE<br>RISING<br>SEA</div>
+        
+        <div style="position: relative; z-index: 2;">
+            <div>&copy; 2026 Guo Liwen. Theme inspired by Thread478.</div>
+        </div>
+    </footer>
 
     <script>
         const themeToggleBtn = document.getElementById('theme-toggle');
@@ -400,8 +398,6 @@
             }
         });
     </script>
-    
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 </body>
 </html>
