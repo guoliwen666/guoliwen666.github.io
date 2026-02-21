@@ -50,7 +50,7 @@
         a { color: var(--accent-color); text-decoration: none; border-bottom: 1px dotted var(--accent-color); transition: color 0.4s ease; }
         a:hover { border-bottom-style: solid; }
 
-        /* --- 新增：专属胶囊简历按钮样式 --- */
+        /* --- 专属胶囊简历按钮样式 --- */
         .cv-btn {
             display: inline-flex;
             align-items: center;
@@ -75,26 +75,14 @@
         .note-title { font-weight: bold; display: block; margin-bottom: 5px; }
         .note-desc { font-size: 0.85rem; color: #999; margin-bottom: 10px; display: block; }
 
-        /* --- 极简音乐播放器样式 --- */
-        .music-player { position: fixed; bottom: 30px; left: 30px; background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(139, 90, 43, 0.15); padding: 8px 16px; border-radius: 30px; display: flex; align-items: center; gap: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); z-index: 1000; backdrop-filter: blur(8px); transition: all 0.4s ease; }
-        body.dark-mode .music-player { background: rgba(36, 36, 36, 0.6); border-color: rgba(255, 255, 255, 0.1); }
-        .music-btn { background: none; border: none; padding: 0; color: var(--accent-color); cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; transition: transform 0.2s; }
-        .music-btn:hover { transform: scale(1.15); }
-        body.dark-mode .music-btn { color: #d4d4d4; }
-        .song-info-wrapper { width: 90px; overflow: hidden; white-space: nowrap; position: relative; }
-        .song-title { font-size: 0.8rem; color: var(--text-main); display: inline-block; font-family: var(--font-sans); animation: scrollText 10s linear infinite; }
-        @keyframes scrollText { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-
         @media (max-width: 600px) {
             .notes-grid { grid-template-columns: 1fr; }
             .card { padding: 20px; }
-            .music-player { bottom: auto; top: 20px; left: 20px; padding: 6px 12px; }
-            .song-info-wrapper { width: 70px; }
         }
 
         /* --- 动画与深色模式 --- */
         @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        /* 增加了一个卡片，所以动画延迟时间顺延了 */
+        
         .container > header, .container > .card, footer { opacity: 0; animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
         .container > header { animation-delay: 0.1s; } 
         .container > .card:nth-of-type(1) { animation-delay: 0.25s; } 
@@ -151,15 +139,6 @@
 </head>
 <body>
 
-    <div class="music-player" id="music-player">
-        <button class="music-btn" id="play-btn" title="Play/Pause">▶</button>
-        <div class="song-info-wrapper">
-            <span class="song-title" id="song-title">Music Loading...</span>
-        </div>
-        <button class="music-btn" id="next-btn" title="Next Song">⏭</button>
-        <audio id="audio-element"></audio>
-    </div>
-
     <div class="global-bg-shapes">
         <div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div>
         <div class="windmill w1"><div class="blade"></div><div class="blade"></div><div class="blade"></div><div class="blade"></div></div>
@@ -191,7 +170,7 @@
             <div style="margin-bottom: 20px;">
                 <div style="display: flex; justify-content: space-between; align-items: baseline;">
                     <strong style="color: var(--text-main); font-size: 1.05rem;">常州大学 (Changzhou University)</strong>
-                    <span style="font-size: 0.85rem; color: var(--text-light);">Expected 2026</span>
+                    <span style="font-size: 0.85rem; color: var(--text-light);"></span>
                 </div>
                 <div style="font-size: 0.95rem; color: var(--text-light); margin-top: 5px;">
                     应用数学 本科 (B.S. in Applied Mathematics)
@@ -199,7 +178,7 @@
             </div>
             
             <a href="viewer.html?file=resume.pdf&title=Guo Liwen - Resume" class="cv-btn">
-                📄 View Full Resume
+                📄 复试简历
             </a>
         </div>
 
@@ -231,11 +210,12 @@
     </footer>
 
     <script>
-        // 深色模式逻辑
         const themeToggleBtn = document.getElementById('theme-toggle');
         const body = document.body;
+        
         const currentTheme = localStorage.getItem('theme');
         if (currentTheme === 'dark') { body.classList.add('dark-mode'); themeToggleBtn.innerText = '☀️'; }
+        
         themeToggleBtn.addEventListener('click', () => {
             body.classList.toggle('dark-mode');
             if (body.classList.contains('dark-mode')) {
@@ -244,43 +224,6 @@
                 themeToggleBtn.innerText = '🌙'; localStorage.setItem('theme', 'light');
             }
         });
-
-        // 音乐播放器逻辑
-        const playlist = [
-            { title: "巴赫 - 无伴奏大提琴组曲", src: "music/song1.mp3" },
-            { title: "周杰伦 - 晴天", src: "music/song2.mp3" }
-        ];
-        
-        let currentSongIndex = 0;
-        const audio = document.getElementById('audio-element');
-        const playBtn = document.getElementById('play-btn');
-        const nextBtn = document.getElementById('next-btn');
-        const songTitle = document.getElementById('song-title');
-
-        function loadSong(index) {
-            audio.src = playlist[index].src;
-            songTitle.innerText = playlist[index].title;
-        }
-
-        function togglePlay() {
-            if (audio.paused) {
-                audio.play().then(() => { playBtn.innerText = "⏸"; }).catch(err => { songTitle.innerText = "Please add audio file"; });
-            } else {
-                audio.pause(); playBtn.innerText = "▶";
-            }
-        }
-
-        function nextSong() {
-            currentSongIndex = (currentSongIndex + 1) % playlist.length;
-            loadSong(currentSongIndex);
-            if (playBtn.innerText === "⏸") { audio.play(); }
-        }
-
-        playBtn.addEventListener('click', togglePlay);
-        nextBtn.addEventListener('click', nextSong);
-        audio.addEventListener('ended', nextSong);
-
-        loadSong(currentSongIndex);
     </script>
 
 </body>
