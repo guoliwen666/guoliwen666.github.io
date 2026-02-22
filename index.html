@@ -135,6 +135,43 @@
         @media (max-width: 600px) {
             footer { padding-top: 150px; } .vegetation { top: 148px; } .footer-bg-text { font-size: 4rem; right: 15px; } .wave-bg { bottom: -3850px; } .wave-fg { bottom: -3870px; } .rolling-dots { height: 120px; } .windmill { scale: 0.7; }
         }
+
+        /* --- 新增：漂浮数学符文样式 --- */
+        .math-symbol {
+            position: absolute;
+            font-family: "Georgia", "Times New Roman", serif;
+            font-style: italic;
+            color: var(--accent-color);
+            opacity: 0.12; /* 极低透明度，若隐若现 */
+            z-index: -1;
+            /* 初始位置在屏幕下方 */
+            transform: translateY(110vh);
+            animation: floatMath linear infinite;
+        }
+        body.dark-mode .math-symbol {
+            color: rgba(255, 255, 255, 0.3);
+            opacity: 0.08;
+        }
+
+        /* 定义符文的飘动动画：从下往上，伴随旋转 */
+        @keyframes floatMath {
+            0% { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0; }
+            10% { opacity: 0.12; } /* 淡入 */
+            90% { opacity: 0.12; }
+            100% { transform: translateY(-10vh) rotate(360deg) scale(1.1); opacity: 0; }
+        }
+
+        /* 分别设置每个符文的位置、大小、动画时间和延迟，制造随机感 */
+        /* 左侧 */
+        .m1 { left: 5%; font-size: 3rem; animation-duration: 25s; animation-delay: 0s; }
+        .m2 { left: 15%; font-size: 2rem; animation-duration: 35s; animation-delay: -10s; }
+        .m3 { left: 8%; font-size: 4rem; animation-duration: 30s; animation-delay: -5s; }
+        .m4 { left: 2%; font-size: 2.5rem; animation-duration: 40s; animation-delay: -15s; }
+        /* 右侧 */
+        .m5 { left: 80%; font-size: 3rem; animation-duration: 28s; animation-delay: -2s; }
+        .m6 { left: 90%; font-size: 2.5rem; animation-duration: 38s; animation-delay: -8s; }
+        .m7 { left: 85%; font-size: 4rem; animation-duration: 32s; animation-delay: -12s; }
+        .m8 { left: 95%; font-size: 2rem; animation-duration: 45s; animation-delay: -20s; }
     </style>
 </head>
 <body>
@@ -147,6 +184,15 @@
         <div class="windmill w4"><div class="blade"></div><div class="blade"></div><div class="blade"></div><div class="blade"></div></div>
         <div class="windmill w5"><div class="blade"></div><div class="blade"></div><div class="blade"></div><div class="blade"></div></div>
         <div class="windmill w6"><div class="blade"></div><div class="blade"></div><div class="blade"></div><div class="blade"></div></div>
+        
+        <div class="math-symbol m1">∫</div>
+        <div class="math-symbol m2">∑</div>
+        <div class="math-symbol m3">∂</div>
+        <div class="math-symbol m4">∞</div>
+        <div class="math-symbol m5">∇</div>
+        <div class="math-symbol m6">∏</div>
+        <div class="math-symbol m7">≈</div>
+        <div class="math-symbol m8">∫</div>
     </div>
 
     <button class="theme-toggle" id="theme-toggle" title="切换深色模式">🌙</button>
