@@ -30,6 +30,17 @@
             overflow-x: hidden; 
         }
 
+        /* --- 新增：星空连线交互背景 Canvas --- */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2; /* 放在所有元素的最后面 */
+            pointer-events: none; /* 绝对不能阻挡网页上的点击事件 */
+        }
+
         .container {
             max-width: 700px;
             margin: 0 auto;
@@ -50,25 +61,9 @@
         a { color: var(--accent-color); text-decoration: none; border-bottom: 1px dotted var(--accent-color); transition: color 0.4s ease; }
         a:hover { border-bottom-style: solid; }
 
-        /* --- 专属胶囊简历按钮样式 --- */
-        .cv-btn {
-            display: inline-flex;
-            align-items: center;
-            margin-top: 5px;
-            padding: 8px 22px;
-            background-color: var(--accent-color);
-            color: #fff !important; 
-            border-radius: 25px;
-            font-size: 0.9rem;
-            font-family: var(--font-sans);
-            text-decoration: none;
-            border: none !important; 
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .cv-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(139, 90, 43, 0.25);
-        }
+        /* 专属胶囊简历按钮样式 */
+        .cv-btn { display: inline-flex; align-items: center; margin-top: 5px; padding: 8px 22px; background-color: var(--accent-color); color: #fff !important; border-radius: 25px; font-size: 0.9rem; font-family: var(--font-sans); text-decoration: none; border: none !important; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .cv-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(139, 90, 43, 0.25); }
 
         .notes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .note-item { background: #fafafa; padding: 15px; border-radius: 10px; text-align: center; transition: background-color 0.4s ease; }
@@ -80,9 +75,8 @@
             .card { padding: 20px; }
         }
 
-        /* --- 动画与深色模式 --- */
+        /* 动画与深色模式 */
         @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        
         .container > header, .container > .card, footer { opacity: 0; animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
         .container > header { animation-delay: 0.1s; } 
         .container > .card:nth-of-type(1) { animation-delay: 0.25s; } 
@@ -136,45 +130,16 @@
             footer { padding-top: 150px; } .vegetation { top: 148px; } .footer-bg-text { font-size: 4rem; right: 15px; } .wave-bg { bottom: -3850px; } .wave-fg { bottom: -3870px; } .rolling-dots { height: 120px; } .windmill { scale: 0.7; }
         }
 
-        /* --- 新增：漂浮数学符文样式 --- */
-        .math-symbol {
-            position: absolute;
-            font-family: "Georgia", "Times New Roman", serif;
-            font-style: italic;
-            color: var(--accent-color);
-            opacity: 0.12; /* 极低透明度，若隐若现 */
-            z-index: -1;
-            /* 初始位置在屏幕下方 */
-            transform: translateY(110vh);
-            animation: floatMath linear infinite;
-        }
-        body.dark-mode .math-symbol {
-            color: rgba(255, 255, 255, 0.3);
-            opacity: 0.08;
-        }
-
-        /* 定义符文的飘动动画：从下往上，伴随旋转 */
-        @keyframes floatMath {
-            0% { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0; }
-            10% { opacity: 0.12; } /* 淡入 */
-            90% { opacity: 0.12; }
-            100% { transform: translateY(-10vh) rotate(360deg) scale(1.1); opacity: 0; }
-        }
-
-        /* 分别设置每个符文的位置、大小、动画时间和延迟，制造随机感 */
-        /* 左侧 */
-        .m1 { left: 5%; font-size: 3rem; animation-duration: 25s; animation-delay: 0s; }
-        .m2 { left: 15%; font-size: 2rem; animation-duration: 35s; animation-delay: -10s; }
-        .m3 { left: 8%; font-size: 4rem; animation-duration: 30s; animation-delay: -5s; }
-        .m4 { left: 2%; font-size: 2.5rem; animation-duration: 40s; animation-delay: -15s; }
-        /* 右侧 */
-        .m5 { left: 80%; font-size: 3rem; animation-duration: 28s; animation-delay: -2s; }
-        .m6 { left: 90%; font-size: 2.5rem; animation-duration: 38s; animation-delay: -8s; }
-        .m7 { left: 85%; font-size: 4rem; animation-duration: 32s; animation-delay: -12s; }
-        .m8 { left: 95%; font-size: 2rem; animation-duration: 45s; animation-delay: -20s; }
+        /* 漂浮数学符文样式 */
+        .math-symbol { position: absolute; font-family: "Georgia", "Times New Roman", serif; font-style: italic; color: var(--accent-color); opacity: 0.12; z-index: -1; transform: translateY(110vh); animation: floatMath linear infinite; }
+        body.dark-mode .math-symbol { color: rgba(255, 255, 255, 0.3); opacity: 0.08; }
+        @keyframes floatMath { 0% { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0; } 10% { opacity: 0.12; } 90% { opacity: 0.12; } 100% { transform: translateY(-10vh) rotate(360deg) scale(1.1); opacity: 0; } }
+        .m1 { left: 5%; font-size: 3rem; animation-duration: 25s; animation-delay: 0s; } .m2 { left: 15%; font-size: 2rem; animation-duration: 35s; animation-delay: -10s; } .m3 { left: 8%; font-size: 4rem; animation-duration: 30s; animation-delay: -5s; } .m4 { left: 2%; font-size: 2.5rem; animation-duration: 40s; animation-delay: -15s; } .m5 { left: 80%; font-size: 3rem; animation-duration: 28s; animation-delay: -2s; } .m6 { left: 90%; font-size: 2.5rem; animation-duration: 38s; animation-delay: -8s; } .m7 { left: 85%; font-size: 4rem; animation-duration: 32s; animation-delay: -12s; } .m8 { left: 95%; font-size: 2rem; animation-duration: 45s; animation-delay: -20s; }
     </style>
 </head>
 <body>
+
+    <canvas id="particle-canvas"></canvas>
 
     <div class="global-bg-shapes">
         <div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div>
@@ -185,14 +150,8 @@
         <div class="windmill w5"><div class="blade"></div><div class="blade"></div><div class="blade"></div><div class="blade"></div></div>
         <div class="windmill w6"><div class="blade"></div><div class="blade"></div><div class="blade"></div><div class="blade"></div></div>
         
-        <div class="math-symbol m1">∫</div>
-        <div class="math-symbol m2">∑</div>
-        <div class="math-symbol m3">∂</div>
-        <div class="math-symbol m4">∞</div>
-        <div class="math-symbol m5">∇</div>
-        <div class="math-symbol m6">∏</div>
-        <div class="math-symbol m7">≈</div>
-        <div class="math-symbol m8">∫</div>
+        <div class="math-symbol m1">∫</div><div class="math-symbol m2">∑</div><div class="math-symbol m3">∂</div><div class="math-symbol m4">∞</div>
+        <div class="math-symbol m5">∇</div><div class="math-symbol m6">∏</div><div class="math-symbol m7">≈</div><div class="math-symbol m8">∫</div>
     </div>
 
     <button class="theme-toggle" id="theme-toggle" title="切换深色模式">🌙</button>
@@ -256,6 +215,7 @@
     </footer>
 
     <script>
+        // --- 1. 深色模式切换逻辑 ---
         const themeToggleBtn = document.getElementById('theme-toggle');
         const body = document.body;
         
@@ -270,6 +230,103 @@
                 themeToggleBtn.innerText = '🌙'; localStorage.setItem('theme', 'light');
             }
         });
+
+        // --- 2. 新增：星空连线粒子特效脚本 ---
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, particles = [];
+        const mouse = { x: -9999, y: -9999 };
+
+        // 初始化画布大小和粒子数量
+        function initParticles() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            particles = [];
+            // 根据屏幕大小计算粒子数量，保持合理的密度
+            const particleCount = Math.floor((width * height) / 12000); 
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 0.6, // X轴移动速度
+                    vy: (Math.random() - 0.5) * 0.6  // Y轴移动速度
+                });
+            }
+        }
+
+        // 监听鼠标移动
+        window.addEventListener('mousemove', e => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+        
+        // 鼠标移出屏幕时取消连线
+        window.addEventListener('mouseout', () => {
+            mouse.x = -9999;
+            mouse.y = -9999;
+        });
+
+        // 适配屏幕缩放
+        window.addEventListener('resize', initParticles);
+
+        // 绘制动画帧
+        function drawParticles() {
+            ctx.clearRect(0, 0, width, height);
+            
+            // 自动判断当前是否是深色模式，决定粒子的颜色
+            const isDarkMode = body.classList.contains('dark-mode');
+            const colorRGB = isDarkMode ? '255, 255, 255' : '139, 90, 43';
+
+            for (let i = 0; i < particles.length; i++) {
+                let p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+
+                // 碰到边缘反弹
+                if (p.x < 0 || p.x > width) p.vx *= -1;
+                if (p.y < 0 || p.y > height) p.vy *= -1;
+
+                // 画出小圆点
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 1.2, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${colorRGB}, 0.4)`;
+                ctx.fill();
+
+                // 粒子与粒子之间的连线
+                for (let j = i + 1; j < particles.length; j++) {
+                    let p2 = particles[j];
+                    let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                    // 距离小于 120 的粒子互相连线
+                    if (dist < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        // 越近线越清晰
+                        ctx.strokeStyle = `rgba(${colorRGB}, ${0.15 - dist/120 * 0.15})`;
+                        ctx.stroke();
+                    }
+                }
+
+                // 粒子与鼠标的交互连线
+                let mouseDist = Math.hypot(p.x - mouse.x, p.y - mouse.y);
+                if (mouseDist < 160) {
+                    ctx.beginPath();
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(mouse.x, mouse.y);
+                    ctx.strokeStyle = `rgba(${colorRGB}, ${0.3 - mouseDist/160 * 0.3})`;
+                    ctx.stroke();
+                    
+                    // 神奇的交互点：产生轻微的鼠标吸引力，让粒子向鼠标聚拢
+                    p.x -= (p.x - mouse.x) * 0.015;
+                    p.y -= (p.y - mouse.y) * 0.015;
+                }
+            }
+            requestAnimationFrame(drawParticles);
+        }
+
+        // 启动特效
+        initParticles();
+        drawParticles();
     </script>
 
 </body>
