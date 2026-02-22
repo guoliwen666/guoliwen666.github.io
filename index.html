@@ -36,9 +36,7 @@
         }
 
         .container {
-            max-width: 700px;
-            margin: 0 auto;
-            position: relative; z-index: 10; 
+            max-width: 700px; margin: 0 auto; position: relative; z-index: 10; 
         }
 
         header { text-align: center; margin-bottom: 50px; padding-top: 30px; }
@@ -172,7 +170,7 @@
                 </div>
             </div>
             
-            <a href="viewer.html?file=resume.pdf&title=Guo Liwen - Resume" class="cv-btn">
+            <a href="resume.pdf" target="_blank" class="cv-btn">
                 📄 Resume
             </a>
         </div>
@@ -205,13 +203,11 @@
     </footer>
 
     <script>
-        // --- 1. 深色模式切换逻辑 ---
+        // --- 1. 深色模式切换 ---
         const themeToggleBtn = document.getElementById('theme-toggle');
         const body = document.body;
-        
         const currentTheme = localStorage.getItem('theme');
         if (currentTheme === 'dark') { body.classList.add('dark-mode'); themeToggleBtn.innerText = '☀️'; }
-        
         themeToggleBtn.addEventListener('click', () => {
             body.classList.toggle('dark-mode');
             if (body.classList.contains('dark-mode')) {
@@ -221,15 +217,14 @@
             }
         });
 
-        // --- 2. 星空连线粒子特效脚本 ---
+        // --- 2. 星空连线粒子特效 ---
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         let width, height, particles = [];
         const mouse = { x: -9999, y: -9999 };
 
         function initParticles() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
+            width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight;
             particles = [];
             const particleCount = Math.floor((width * height) / 12000); 
             for (let i = 0; i < particleCount; i++) {
@@ -276,26 +271,101 @@
             }
             requestAnimationFrame(drawParticles);
         }
-
         initParticles(); drawParticles();
 
-        // --- 3. 新增：学术小调皮 (动态网页标题) ---
+        // --- 3. 学术小调皮 (动态网页标题) ---
         const originTitle = document.title;
         let titleTime;
         document.addEventListener('visibilitychange', function() {
             if (document.hidden) {
-                // 当你切到别的网页去摸鱼时，标题会变成这样
-                document.title = '(っ °Д °;)っ 别跑！ 算我求你了！';
+                document.title = '(っ °Д °;)っ 别跑！苏大考研代数题还没做完呢！';
                 clearTimeout(titleTime);
             } else {
-                // 当你回到这个网页时，标题会变成这样
                 document.title = '(*´∇｀*) 终于回来啃数学了~';
-                // 2秒后恢复成正常的 "Guo Liwen | Mathematics"
                 titleTime = setTimeout(function() {
                     document.title = originTitle;
                 }, 2000); 
             }
         });
+
+        // --- 4. 新增：极客键盘彩蛋 (密语: group) ---
+        const secretCode = ['g', 'r', 'o', 'u', 'p'];
+        let keyBuffer = [];
+        window.addEventListener('keydown', (e) => {
+            keyBuffer.push(e.key.toLowerCase());
+            if (keyBuffer.length > secretCode.length) {
+                keyBuffer.shift(); 
+            }
+            if (keyBuffer.join('') === secretCode.join('')) {
+                triggerMathRain();
+                keyBuffer = []; 
+            }
+        });
+
+        function triggerMathRain() {
+            if (document.getElementById('math-matrix-overlay')) return; 
+
+            // 创建遮罩层
+            const overlay = document.createElement('div');
+            overlay.id = 'math-matrix-overlay';
+            overlay.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9999;background:rgba(0,0,0,0.9);overflow:hidden;';
+            
+            // 创建退出按钮
+            const closeBtn = document.createElement('button');
+            closeBtn.innerText = '退出沉浸 (Esc)';
+            closeBtn.style.cssText = 'position:absolute;top:20px;right:20px;padding:10px 20px;background:var(--accent-color);color:#fff;border:none;border-radius:25px;cursor:pointer;z-index:10000;font-family:inherit;font-size:0.9rem;box-shadow:0 4px 15px rgba(139,90,43,0.3);';
+            closeBtn.onclick = () => overlay.remove();
+            
+            // 创建矩阵画布
+            const matrixCanvas = document.createElement('canvas');
+            overlay.appendChild(matrixCanvas);
+            overlay.appendChild(closeBtn);
+            document.body.appendChild(overlay);
+
+            // 矩阵掉落逻辑
+            const mCtx = matrixCanvas.getContext('2d');
+            matrixCanvas.width = window.innerWidth;
+            matrixCanvas.height = window.innerHeight;
+            
+            // 数学符号库
+            const chars = '∫∑∏∂∇∆∈∉⊆⊂∪∩⊕⊗≅≈∞ℝℂℤℚ'.split('');
+            const fontSize = 22;
+            const columns = matrixCanvas.width / fontSize;
+            const drops = [];
+            for (let x = 0; x < columns; x++) drops[x] = 1;
+            
+            function drawMatrix() {
+                if (!document.getElementById('math-matrix-overlay')) return; 
+                
+                // 绘制半透明黑底，形成拖尾效果
+                mCtx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                mCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+                
+                mCtx.fillStyle = '#d4a373'; // 使用你的主题色
+                mCtx.font = fontSize + 'px "Georgia"';
+                
+                for (let i = 0; i < drops.length; i++) {
+                    const text = chars[Math.floor(Math.random() * chars.length)];
+                    mCtx.fillText(text, i * fontSize, drops[i] * fontSize);
+                    
+                    if (drops[i] * fontSize > matrixCanvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
+                }
+                requestAnimationFrame(drawMatrix);
+            }
+            drawMatrix();
+            
+            // 监听 Esc 键退出
+            const escListener = (e) => {
+                if (e.key === 'Escape') {
+                    overlay.remove();
+                    window.removeEventListener('keydown', escListener);
+                }
+            };
+            window.addEventListener('keydown', escListener);
+        }
     </script>
 
 </body>
