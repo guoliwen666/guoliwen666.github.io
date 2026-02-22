@@ -107,7 +107,7 @@
         @keyframes floatMath { 0% { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0; } 10% { opacity: 0.12; } 90% { opacity: 0.12; } 100% { transform: translateY(-10vh) rotate(360deg) scale(1.1); opacity: 0; } }
         .m1 { left: 5%; font-size: 3rem; animation-duration: 25s; animation-delay: 0s; } .m2 { left: 15%; font-size: 2rem; animation-duration: 35s; animation-delay: -10s; } .m3 { left: 8%; font-size: 4rem; animation-duration: 30s; animation-delay: -5s; } .m4 { left: 2%; font-size: 2.5rem; animation-duration: 40s; animation-delay: -15s; } .m5 { left: 80%; font-size: 3rem; animation-duration: 28s; animation-delay: -2s; } .m6 { left: 90%; font-size: 2.5rem; animation-duration: 38s; animation-delay: -8s; } .m7 { left: 85%; font-size: 4rem; animation-duration: 32s; animation-delay: -12s; } .m8 { left: 95%; font-size: 2rem; animation-duration: 45s; animation-delay: -20s; }
 
-        /* --- 新增：指尖的数学涟漪动画 --- */
+        /* --- 指尖的数学涟漪动画 --- */
         .click-ripple {
             position: fixed;
             color: var(--accent-color);
@@ -332,13 +332,16 @@
             window.addEventListener('keydown', escListener);
         }
 
-        // --- 新增功能 1：指尖的数学涟漪 ---
+        // --- 核心修正：指尖的数学涟漪 (排除按钮和链接) ---
         const mathFormulas = [
             'e^{iπ} + 1 = 0', '∇×E = -∂B/∂t', 'G/H', 'ker(f)', 'ℵ₀', 
             '∫e^{-x²}dx = √π', 'F = ma', 'E = mc²', 'a²+b²=c²', 'ζ(s)=0',
             'S = k_B ln W', 'P(A|B) = P(B|A)P(A)/P(B)', '∀ε>0, ∃δ>0', 'Q.E.D.'
         ];
         window.addEventListener('click', function(e) {
+            // 拦截器：如果点击的目标是 <button> 或 <a> 标签内部，则直接返回，不触发涟漪
+            if (e.target.closest('button, a')) return;
+
             const ripple = document.createElement('div');
             ripple.className = 'click-ripple';
             ripple.innerText = mathFormulas[Math.floor(Math.random() * mathFormulas.length)];
@@ -348,7 +351,7 @@
             setTimeout(() => ripple.remove(), 1200);
         });
 
-        // --- 新增功能 2：F12 控制台开发者彩蛋 ---
+        // --- F12 控制台开发者彩蛋 ---
         const asciiArt = `
            _     _         _ 
           | |   (_)       (_)
