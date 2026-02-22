@@ -30,15 +30,9 @@
             overflow-x: hidden; 
         }
 
-        /* --- 新增：星空连线交互背景 Canvas --- */
         #particle-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -2; /* 放在所有元素的最后面 */
-            pointer-events: none; /* 绝对不能阻挡网页上的点击事件 */
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -2; pointer-events: none; 
         }
 
         .container {
@@ -61,7 +55,6 @@
         a { color: var(--accent-color); text-decoration: none; border-bottom: 1px dotted var(--accent-color); transition: color 0.4s ease; }
         a:hover { border-bottom-style: solid; }
 
-        /* 专属胶囊简历按钮样式 */
         .cv-btn { display: inline-flex; align-items: center; margin-top: 5px; padding: 8px 22px; background-color: var(--accent-color); color: #fff !important; border-radius: 25px; font-size: 0.9rem; font-family: var(--font-sans); text-decoration: none; border: none !important; transition: transform 0.2s ease, box-shadow 0.2s ease; }
         .cv-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(139, 90, 43, 0.25); }
 
@@ -75,7 +68,6 @@
             .card { padding: 20px; }
         }
 
-        /* 动画与深色模式 */
         @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         .container > header, .container > .card, footer { opacity: 0; animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
         .container > header { animation-delay: 0.1s; } 
@@ -91,7 +83,6 @@
         body.dark-mode .theme-toggle { border-color: #333; } body.dark-mode h2 { border-bottom-color: #333; } body.dark-mode .note-item { background: #1e1e1e; } body.dark-mode h1 { color: #e0e0e0; }
         body.dark-mode .cv-btn { background-color: var(--accent-color); color: #1a1a1a !important; box-shadow: 0 4px 12px rgba(212, 163, 115, 0.2); }
 
-        /* --- 生态系统：风车 + 云朵 + 花草 + 波浪 + 点阵 --- */
         .global-bg-shapes { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
         .windmill { position: absolute; width: 100px; height: 100px; display: flex; justify-content: center; align-items: center; opacity: 0.6; }
         .blade { position: absolute; width: 14px; height: 50px; background-color: rgba(139, 90, 43, 0.15); border: 1px solid rgba(139, 90, 43, 0.3); border-radius: 50% 50% 10% 10%; top: 50%; left: 50%; transform-origin: center bottom; }
@@ -130,7 +121,6 @@
             footer { padding-top: 150px; } .vegetation { top: 148px; } .footer-bg-text { font-size: 4rem; right: 15px; } .wave-bg { bottom: -3850px; } .wave-fg { bottom: -3870px; } .rolling-dots { height: 120px; } .windmill { scale: 0.7; }
         }
 
-        /* 漂浮数学符文样式 */
         .math-symbol { position: absolute; font-family: "Georgia", "Times New Roman", serif; font-style: italic; color: var(--accent-color); opacity: 0.12; z-index: -1; transform: translateY(110vh); animation: floatMath linear infinite; }
         body.dark-mode .math-symbol { color: rgba(255, 255, 255, 0.3); opacity: 0.08; }
         @keyframes floatMath { 0% { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0; } 10% { opacity: 0.12; } 90% { opacity: 0.12; } 100% { transform: translateY(-10vh) rotate(360deg) scale(1.1); opacity: 0; } }
@@ -231,102 +221,81 @@
             }
         });
 
-        // --- 2. 新增：星空连线粒子特效脚本 ---
+        // --- 2. 星空连线粒子特效脚本 ---
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         let width, height, particles = [];
         const mouse = { x: -9999, y: -9999 };
 
-        // 初始化画布大小和粒子数量
         function initParticles() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
             particles = [];
-            // 根据屏幕大小计算粒子数量，保持合理的密度
             const particleCount = Math.floor((width * height) / 12000); 
             for (let i = 0; i < particleCount; i++) {
                 particles.push({
-                    x: Math.random() * width,
-                    y: Math.random() * height,
-                    vx: (Math.random() - 0.5) * 0.6, // X轴移动速度
-                    vy: (Math.random() - 0.5) * 0.6  // Y轴移动速度
+                    x: Math.random() * width, y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 0.6, vy: (Math.random() - 0.5) * 0.6 
                 });
             }
         }
 
-        // 监听鼠标移动
-        window.addEventListener('mousemove', e => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-        });
-        
-        // 鼠标移出屏幕时取消连线
-        window.addEventListener('mouseout', () => {
-            mouse.x = -9999;
-            mouse.y = -9999;
-        });
-
-        // 适配屏幕缩放
+        window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+        window.addEventListener('mouseout', () => { mouse.x = -9999; mouse.y = -9999; });
         window.addEventListener('resize', initParticles);
 
-        // 绘制动画帧
         function drawParticles() {
             ctx.clearRect(0, 0, width, height);
-            
-            // 自动判断当前是否是深色模式，决定粒子的颜色
             const isDarkMode = body.classList.contains('dark-mode');
             const colorRGB = isDarkMode ? '255, 255, 255' : '139, 90, 43';
 
             for (let i = 0; i < particles.length; i++) {
                 let p = particles[i];
-                p.x += p.vx;
-                p.y += p.vy;
-
-                // 碰到边缘反弹
+                p.x += p.vx; p.y += p.vy;
                 if (p.x < 0 || p.x > width) p.vx *= -1;
                 if (p.y < 0 || p.y > height) p.vy *= -1;
 
-                // 画出小圆点
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, 1.2, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${colorRGB}, 0.4)`;
-                ctx.fill();
+                ctx.beginPath(); ctx.arc(p.x, p.y, 1.2, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${colorRGB}, 0.4)`; ctx.fill();
 
-                // 粒子与粒子之间的连线
                 for (let j = i + 1; j < particles.length; j++) {
                     let p2 = particles[j];
                     let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-                    // 距离小于 120 的粒子互相连线
                     if (dist < 120) {
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        // 越近线越清晰
-                        ctx.strokeStyle = `rgba(${colorRGB}, ${0.15 - dist/120 * 0.15})`;
-                        ctx.stroke();
+                        ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(${colorRGB}, ${0.15 - dist/120 * 0.15})`; ctx.stroke();
                     }
                 }
 
-                // 粒子与鼠标的交互连线
                 let mouseDist = Math.hypot(p.x - mouse.x, p.y - mouse.y);
                 if (mouseDist < 160) {
-                    ctx.beginPath();
-                    ctx.moveTo(p.x, p.y);
-                    ctx.lineTo(mouse.x, mouse.y);
-                    ctx.strokeStyle = `rgba(${colorRGB}, ${0.3 - mouseDist/160 * 0.3})`;
-                    ctx.stroke();
-                    
-                    // 神奇的交互点：产生轻微的鼠标吸引力，让粒子向鼠标聚拢
-                    p.x -= (p.x - mouse.x) * 0.015;
-                    p.y -= (p.y - mouse.y) * 0.015;
+                    ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y);
+                    ctx.strokeStyle = `rgba(${colorRGB}, ${0.3 - mouseDist/160 * 0.3})`; ctx.stroke();
+                    p.x -= (p.x - mouse.x) * 0.015; p.y -= (p.y - mouse.y) * 0.015;
                 }
             }
             requestAnimationFrame(drawParticles);
         }
 
-        // 启动特效
-        initParticles();
-        drawParticles();
+        initParticles(); drawParticles();
+
+        // --- 3. 新增：学术小调皮 (动态网页标题) ---
+        const originTitle = document.title;
+        let titleTime;
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                // 当你切到别的网页去摸鱼时，标题会变成这样
+                document.title = '(っ °Д °;)っ 别跑！ 算我求你了！';
+                clearTimeout(titleTime);
+            } else {
+                // 当你回到这个网页时，标题会变成这样
+                document.title = '(*´∇｀*) 终于回来啃数学了~';
+                // 2秒后恢复成正常的 "Guo Liwen | Mathematics"
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000); 
+            }
+        });
     </script>
 
 </body>
