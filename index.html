@@ -30,14 +30,9 @@
             overflow-x: hidden; 
         }
 
-        #particle-canvas {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -2; pointer-events: none; 
-        }
+        #particle-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; pointer-events: none; }
 
-        .container {
-            max-width: 700px; margin: 0 auto; position: relative; z-index: 10; 
-        }
+        .container { max-width: 700px; margin: 0 auto; position: relative; z-index: 10; }
 
         header { text-align: center; margin-bottom: 50px; padding-top: 30px; }
         .avatar { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 4px solid var(--card-bg); box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 15px; }
@@ -61,25 +56,16 @@
         .note-title { font-weight: bold; display: block; margin-bottom: 5px; }
         .note-desc { font-size: 0.85rem; color: #999; margin-bottom: 10px; display: block; }
 
-        @media (max-width: 600px) {
-            .notes-grid { grid-template-columns: 1fr; }
-            .card { padding: 20px; }
-        }
+        @media (max-width: 600px) { .notes-grid { grid-template-columns: 1fr; } .card { padding: 20px; } }
 
         @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         .container > header, .container > .card, footer { opacity: 0; animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
-        .container > header { animation-delay: 0.1s; } 
-        .container > .card:nth-of-type(1) { animation-delay: 0.25s; } 
-        .container > .card:nth-of-type(2) { animation-delay: 0.4s; } 
-        .container > .card:nth-of-type(3) { animation-delay: 0.55s; } 
-        .container > .card:nth-of-type(4) { animation-delay: 0.7s; } 
-        footer { animation-delay: 0.85s; }
+        .container > header { animation-delay: 0.1s; } .container > .card:nth-of-type(1) { animation-delay: 0.25s; } .container > .card:nth-of-type(2) { animation-delay: 0.4s; } .container > .card:nth-of-type(3) { animation-delay: 0.55s; } .container > .card:nth-of-type(4) { animation-delay: 0.7s; } footer { animation-delay: 0.85s; }
 
         .theme-toggle { position: fixed; top: 20px; right: 20px; background: var(--card-bg); border: 1px solid #eee; color: var(--text-main); width: 42px; height: 42px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); z-index: 1001; transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease, transform 0.2s; }
         .theme-toggle:hover { transform: scale(1.1); }
         body.dark-mode { --bg-color: #1a1a1a; --card-bg: #242424; --text-main: #d4d4d4; --text-light: #888; --accent-color: #d4a373; background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px); }
-        body.dark-mode .theme-toggle { border-color: #333; } body.dark-mode h2 { border-bottom-color: #333; } body.dark-mode .note-item { background: #1e1e1e; } body.dark-mode h1 { color: #e0e0e0; }
-        body.dark-mode .cv-btn { background-color: var(--accent-color); color: #1a1a1a !important; box-shadow: 0 4px 12px rgba(212, 163, 115, 0.2); }
+        body.dark-mode .theme-toggle { border-color: #333; } body.dark-mode h2 { border-bottom-color: #333; } body.dark-mode .note-item { background: #1e1e1e; } body.dark-mode h1 { color: #e0e0e0; } body.dark-mode .cv-btn { background-color: var(--accent-color); color: #1a1a1a !important; box-shadow: 0 4px 12px rgba(212, 163, 115, 0.2); }
 
         .global-bg-shapes { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
         .windmill { position: absolute; width: 100px; height: 100px; display: flex; justify-content: center; align-items: center; opacity: 0.6; }
@@ -95,7 +81,6 @@
         @keyframes floatCloud { from { transform: translateX(0); } to { transform: translateX(120vw); } }
 
         footer { position: relative; overflow: hidden; text-align: center; font-size: 0.8rem; color: #bbb; margin: 50px -20px -20px -20px; padding-top: 220px; padding-bottom: 50px; border-radius: 0; }
-        
         .vegetation { position: absolute; top: 218px; left: 0; width: 100%; height: 50px; z-index: 2; display: flex; justify-content: space-around; pointer-events: none; opacity: 0.4; }
         body.dark-mode .vegetation { opacity: 0.2; }
         .plant { position: relative; width: 2px; background: var(--accent-color); transform-origin: bottom center; animation: swayPlant 4s ease-in-out infinite alternate; }
@@ -115,14 +100,31 @@
         .footer-bg-text { position: absolute; bottom: -10px; right: 40px; font-size: 6.5rem; font-weight: bold; font-family: "Georgia", "Times New Roman", serif; color: var(--accent-color); opacity: 0.08; text-align: right; line-height: 0.85; z-index: 2; pointer-events: none; }
         body.dark-mode .footer-bg-text { color: #ffffff; opacity: 0.03; }
 
-        @media (max-width: 600px) {
-            footer { padding-top: 150px; } .vegetation { top: 148px; } .footer-bg-text { font-size: 4rem; right: 15px; } .wave-bg { bottom: -3850px; } .wave-fg { bottom: -3870px; } .rolling-dots { height: 120px; } .windmill { scale: 0.7; }
-        }
+        @media (max-width: 600px) { footer { padding-top: 150px; } .vegetation { top: 148px; } .footer-bg-text { font-size: 4rem; right: 15px; } .wave-bg { bottom: -3850px; } .wave-fg { bottom: -3870px; } .rolling-dots { height: 120px; } .windmill { scale: 0.7; } }
 
         .math-symbol { position: absolute; font-family: "Georgia", "Times New Roman", serif; font-style: italic; color: var(--accent-color); opacity: 0.12; z-index: -1; transform: translateY(110vh); animation: floatMath linear infinite; }
         body.dark-mode .math-symbol { color: rgba(255, 255, 255, 0.3); opacity: 0.08; }
         @keyframes floatMath { 0% { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0; } 10% { opacity: 0.12; } 90% { opacity: 0.12; } 100% { transform: translateY(-10vh) rotate(360deg) scale(1.1); opacity: 0; } }
         .m1 { left: 5%; font-size: 3rem; animation-duration: 25s; animation-delay: 0s; } .m2 { left: 15%; font-size: 2rem; animation-duration: 35s; animation-delay: -10s; } .m3 { left: 8%; font-size: 4rem; animation-duration: 30s; animation-delay: -5s; } .m4 { left: 2%; font-size: 2.5rem; animation-duration: 40s; animation-delay: -15s; } .m5 { left: 80%; font-size: 3rem; animation-duration: 28s; animation-delay: -2s; } .m6 { left: 90%; font-size: 2.5rem; animation-duration: 38s; animation-delay: -8s; } .m7 { left: 85%; font-size: 4rem; animation-duration: 32s; animation-delay: -12s; } .m8 { left: 95%; font-size: 2rem; animation-duration: 45s; animation-delay: -20s; }
+
+        /* --- 新增：指尖的数学涟漪动画 --- */
+        .click-ripple {
+            position: fixed;
+            color: var(--accent-color);
+            font-family: "Georgia", "Times New Roman", serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+            font-style: italic;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            animation: rippleFade 1.2s ease-out forwards;
+        }
+        body.dark-mode .click-ripple { color: #d4a373; text-shadow: 0 0 5px rgba(212, 163, 115, 0.4); }
+        @keyframes rippleFade {
+            0% { opacity: 1; transform: translate(-50%, -50%) scale(0.8); }
+            100% { opacity: 0; transform: translate(-50%, -150%) scale(1.2); }
+        }
     </style>
 </head>
 <body>
@@ -170,7 +172,7 @@
                 </div>
             </div>
             
-            <a href="resume.pdf" target="_blank" class="cv-btn">
+            <a href="viewer.html?file=resume.pdf&title=Guo Liwen - Resume" class="cv-btn">
                 📄 Resume
             </a>
         </div>
@@ -203,7 +205,7 @@
     </footer>
 
     <script>
-        // --- 1. 深色模式切换 ---
+        // 深色模式切换
         const themeToggleBtn = document.getElementById('theme-toggle');
         const body = document.body;
         const currentTheme = localStorage.getItem('theme');
@@ -217,7 +219,7 @@
             }
         });
 
-        // --- 2. 星空连线粒子特效 ---
+        // 星空连线粒子特效
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         let width, height, particles = [];
@@ -273,7 +275,7 @@
         }
         initParticles(); drawParticles();
 
-        // --- 3. 学术小调皮 (动态网页标题) ---
+        // 学术小调皮 (动态网页标题)
         const originTitle = document.title;
         let titleTime;
         document.addEventListener('visibilitychange', function() {
@@ -282,90 +284,86 @@
                 clearTimeout(titleTime);
             } else {
                 document.title = '(*´∇｀*) 终于回来啃数学了~';
-                titleTime = setTimeout(function() {
-                    document.title = originTitle;
-                }, 2000); 
+                titleTime = setTimeout(function() { document.title = originTitle; }, 2000); 
             }
         });
 
-        // --- 4. 新增：极客键盘彩蛋 (密语: group) ---
+        // 极客键盘彩蛋 (密语: group)
         const secretCode = ['g', 'r', 'o', 'u', 'p'];
         let keyBuffer = [];
         window.addEventListener('keydown', (e) => {
             keyBuffer.push(e.key.toLowerCase());
-            if (keyBuffer.length > secretCode.length) {
-                keyBuffer.shift(); 
-            }
-            if (keyBuffer.join('') === secretCode.join('')) {
-                triggerMathRain();
-                keyBuffer = []; 
-            }
+            if (keyBuffer.length > secretCode.length) keyBuffer.shift(); 
+            if (keyBuffer.join('') === secretCode.join('')) { triggerMathRain(); keyBuffer = []; }
         });
 
         function triggerMathRain() {
             if (document.getElementById('math-matrix-overlay')) return; 
-
-            // 创建遮罩层
             const overlay = document.createElement('div');
             overlay.id = 'math-matrix-overlay';
             overlay.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9999;background:rgba(0,0,0,0.9);overflow:hidden;';
-            
-            // 创建退出按钮
             const closeBtn = document.createElement('button');
             closeBtn.innerText = '退出沉浸 (Esc)';
             closeBtn.style.cssText = 'position:absolute;top:20px;right:20px;padding:10px 20px;background:var(--accent-color);color:#fff;border:none;border-radius:25px;cursor:pointer;z-index:10000;font-family:inherit;font-size:0.9rem;box-shadow:0 4px 15px rgba(139,90,43,0.3);';
             closeBtn.onclick = () => overlay.remove();
-            
-            // 创建矩阵画布
             const matrixCanvas = document.createElement('canvas');
-            overlay.appendChild(matrixCanvas);
-            overlay.appendChild(closeBtn);
-            document.body.appendChild(overlay);
+            overlay.appendChild(matrixCanvas); overlay.appendChild(closeBtn); document.body.appendChild(overlay);
 
-            // 矩阵掉落逻辑
             const mCtx = matrixCanvas.getContext('2d');
-            matrixCanvas.width = window.innerWidth;
-            matrixCanvas.height = window.innerHeight;
-            
-            // 数学符号库
+            matrixCanvas.width = window.innerWidth; matrixCanvas.height = window.innerHeight;
             const chars = '∫∑∏∂∇∆∈∉⊆⊂∪∩⊕⊗≅≈∞ℝℂℤℚ'.split('');
-            const fontSize = 22;
-            const columns = matrixCanvas.width / fontSize;
-            const drops = [];
-            for (let x = 0; x < columns; x++) drops[x] = 1;
+            const fontSize = 22; const columns = matrixCanvas.width / fontSize;
+            const drops = []; for (let x = 0; x < columns; x++) drops[x] = 1;
             
             function drawMatrix() {
                 if (!document.getElementById('math-matrix-overlay')) return; 
-                
-                // 绘制半透明黑底，形成拖尾效果
-                mCtx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-                mCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
-                
-                mCtx.fillStyle = '#d4a373'; // 使用你的主题色
-                mCtx.font = fontSize + 'px "Georgia"';
-                
+                mCtx.fillStyle = 'rgba(0, 0, 0, 0.05)'; mCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+                mCtx.fillStyle = '#d4a373'; mCtx.font = fontSize + 'px "Georgia"';
                 for (let i = 0; i < drops.length; i++) {
                     const text = chars[Math.floor(Math.random() * chars.length)];
                     mCtx.fillText(text, i * fontSize, drops[i] * fontSize);
-                    
-                    if (drops[i] * fontSize > matrixCanvas.height && Math.random() > 0.975) {
-                        drops[i] = 0;
-                    }
+                    if (drops[i] * fontSize > matrixCanvas.height && Math.random() > 0.975) drops[i] = 0;
                     drops[i]++;
                 }
                 requestAnimationFrame(drawMatrix);
             }
             drawMatrix();
-            
-            // 监听 Esc 键退出
-            const escListener = (e) => {
-                if (e.key === 'Escape') {
-                    overlay.remove();
-                    window.removeEventListener('keydown', escListener);
-                }
-            };
+            const escListener = (e) => { if (e.key === 'Escape') { overlay.remove(); window.removeEventListener('keydown', escListener); } };
             window.addEventListener('keydown', escListener);
         }
+
+        // --- 新增功能 1：指尖的数学涟漪 ---
+        const mathFormulas = [
+            'e^{iπ} + 1 = 0', '∇×E = -∂B/∂t', 'G/H', 'ker(f)', 'ℵ₀', 
+            '∫e^{-x²}dx = √π', 'F = ma', 'E = mc²', 'a²+b²=c²', 'ζ(s)=0',
+            'S = k_B ln W', 'P(A|B) = P(B|A)P(A)/P(B)', '∀ε>0, ∃δ>0', 'Q.E.D.'
+        ];
+        window.addEventListener('click', function(e) {
+            const ripple = document.createElement('div');
+            ripple.className = 'click-ripple';
+            ripple.innerText = mathFormulas[Math.floor(Math.random() * mathFormulas.length)];
+            ripple.style.left = e.clientX + 'px';
+            ripple.style.top = e.clientY + 'px';
+            document.body.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 1200);
+        });
+
+        // --- 新增功能 2：F12 控制台开发者彩蛋 ---
+        const asciiArt = `
+           _     _         _ 
+          | |   (_)       (_)
+          | |    _ __   __ _ 
+          | |   | |\\ \\ / /| |
+          | |___| | \\ V / | |
+          \\_____/_|  \\_/  |_|
+        `;
+        console.log(
+            `%c${asciiArt}\n%cWelcome to the world of mathematics.\n%c—— livi (苏州大学准研究生)\n\n%c"Line, from origin."`,
+            "color: #8b5a2b; font-weight: bold;",
+            "color: #4a4a4a; font-size: 14px;",
+            "color: #888888; font-style: italic;",
+            "color: #888888; font-size: 12px;"
+        );
     </script>
 
 </body>
