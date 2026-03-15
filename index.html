@@ -8,18 +8,21 @@
 
     <style>
         :root {
-            --bg-color: #f9f7f1;      
-            --card-bg: #ffffff;       
-            --text-main: #4a4a4a;     
-            --text-light: #888888;    
-            --accent-color: #8b5a2b;  
+            /* --- 微微粉色，基于 image_7.png 提取 --- */
+            --bg-color: #FDF0F3; 
+            --card-bg: #FFFFFF;
+            --text-main: #4a4a4a;
+            --text-light: #888888;
+            /* --- 保留棕色作为强调色 --- */
+            --accent-color: #8B5A2B; 
             --font-serif: "Georgia", "Noto Serif SC", "Songti SC", serif;
             --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         body {
             background-color: var(--bg-color);
-            background-image: radial-gradient(rgba(139, 90, 43, 0.08) 1px, transparent 1px);
+            /* --- 修改径向渐变颜色，使其更柔和、更偏向粉色/棕色 --- */
+            background-image: radial-gradient(#F5E6E8 1px, transparent 1px);
             background-size: 20px 20px; 
             color: var(--text-main);
             font-family: var(--font-serif);
@@ -107,24 +110,9 @@
         @keyframes floatMath { 0% { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0; } 10% { opacity: 0.12; } 90% { opacity: 0.12; } 100% { transform: translateY(-10vh) rotate(360deg) scale(1.1); opacity: 0; } }
         .m1 { left: 5%; font-size: 3rem; animation-duration: 25s; animation-delay: 0s; } .m2 { left: 15%; font-size: 2rem; animation-duration: 35s; animation-delay: -10s; } .m3 { left: 8%; font-size: 4rem; animation-duration: 30s; animation-delay: -5s; } .m4 { left: 2%; font-size: 2.5rem; animation-duration: 40s; animation-delay: -15s; } .m5 { left: 80%; font-size: 3rem; animation-duration: 28s; animation-delay: -2s; } .m6 { left: 90%; font-size: 2.5rem; animation-duration: 38s; animation-delay: -8s; } .m7 { left: 85%; font-size: 4rem; animation-duration: 32s; animation-delay: -12s; } .m8 { left: 95%; font-size: 2rem; animation-duration: 45s; animation-delay: -20s; }
 
-        /* --- 指尖的数学涟漪动画 --- */
-        .click-ripple {
-            position: fixed;
-            color: var(--accent-color);
-            font-family: "Georgia", "Times New Roman", serif;
-            font-size: 1.2rem;
-            font-weight: bold;
-            font-style: italic;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            animation: rippleFade 1.2s ease-out forwards;
-        }
+        .click-ripple { position: fixed; color: var(--accent-color); font-family: "Georgia", "Times New Roman", serif; font-size: 1.2rem; font-weight: bold; font-style: italic; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); animation: rippleFade 1.2s ease-out forwards; }
         body.dark-mode .click-ripple { color: #d4a373; text-shadow: 0 0 5px rgba(212, 163, 115, 0.4); }
-        @keyframes rippleFade {
-            0% { opacity: 1; transform: translate(-50%, -50%) scale(0.8); }
-            100% { opacity: 0; transform: translate(-50%, -150%) scale(1.2); }
-        }
+        @keyframes rippleFade { 0% { opacity: 1; transform: translate(-50%, -50%) scale(0.8); } 100% { opacity: 0; transform: translate(-50%, -150%) scale(1.2); } }
     </style>
 </head>
 <body>
@@ -283,7 +271,7 @@
                 document.title = '(っ °Д °;)っ 别跑！苏大考研代数题还没做完呢！';
                 clearTimeout(titleTime);
             } else {
-                document.title = '(*´∇｀*) 终于回来啃数学了~';
+                document.title = '(*´∇星) 终于回来啃数学了~';
                 titleTime = setTimeout(function() { document.title = originTitle; }, 2000); 
             }
         });
@@ -332,16 +320,14 @@
             window.addEventListener('keydown', escListener);
         }
 
-        // --- 核心修正：指尖的数学涟漪 (排除按钮和链接) ---
+        // --- 指尖的数学涟漪 (排除按钮和链接) ---
         const mathFormulas = [
             'e^{iπ} + 1 = 0', '∇×E = -∂B/∂t', 'G/H', 'ker(f)', 'ℵ₀', 
             '∫e^{-x²}dx = √π', 'F = ma', 'E = mc²', 'a²+b²=c²', 'ζ(s)=0',
             'S = k_B ln W', 'P(A|B) = P(B|A)P(A)/P(B)', '∀ε>0, ∃δ>0', 'Q.E.D.'
         ];
         window.addEventListener('click', function(e) {
-            // 拦截器：如果点击的目标是 <button> 或 <a> 标签内部，则直接返回，不触发涟漪
             if (e.target.closest('button, a')) return;
-
             const ripple = document.createElement('div');
             ripple.className = 'click-ripple';
             ripple.innerText = mathFormulas[Math.floor(Math.random() * mathFormulas.length)];
